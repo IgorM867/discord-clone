@@ -4,7 +4,6 @@ export default withAuth({
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/auth/signin",
-    newUser: "auth/new-user",
   },
 });
 
