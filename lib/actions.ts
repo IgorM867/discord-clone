@@ -5,7 +5,11 @@ import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const getUserByEmail = async (email: string) => {
+export async function getCurrentUser() {
+  return await getServerSession(authOptions);
+}
+
+export async function getUserByEmail(email: string) {
   try {
     const { rows } = await sql`SELECT * FROM users WHERE email=${email};`;
     return rows[0] as User;
@@ -13,9 +17,9 @@ export const getUserByEmail = async (email: string) => {
     console.log(error);
     return null;
   }
-};
+}
 
-export const createUser = async ({
+export async function createUser({
   username,
   email,
   image,
@@ -25,7 +29,7 @@ export const createUser = async ({
   email: string;
   image: string | null;
   password: string | null;
-}) => {
+}) {
   try {
     const result =
       await sql`INSERT INTO users (username,email,image,password) VALUES (${username},${email},${image},${password}) RETURNING *;`;
@@ -35,7 +39,7 @@ export const createUser = async ({
     console.log(error);
     return null;
   }
-};
+}
 
 export async function createServer(
   prevState: {
@@ -46,7 +50,7 @@ export async function createServer(
   const servername = formData.get("servername");
   if (!servername || typeof servername != "string") return { error: "Server name can't be empty" };
 
-  const session = await getServerSession(authOptions);
+  const session = await getCurrentUser();
   if (!session?.user) return { error: "Please Sign In" };
   const { user } = session;
 

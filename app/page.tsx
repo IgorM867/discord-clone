@@ -1,11 +1,10 @@
 import { Navbar } from "@/components/Navbar";
 import { SignOutButton } from "@/components/signOutButton";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/authOptions";
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/actions";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
+  const session = await getCurrentUser();
   if (!session) return redirect("/auth/signin");
   return (
     <main className="bg-d-gray-300 h-screen flex">

@@ -1,14 +1,14 @@
 import { SingInForm } from "./components/SingInForm";
 import { SignInNewUserForm } from "./components/SignInNewUserForm";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/actions";
 
 export const initialState = {
   error: "",
 };
 
 export default async function page({ searchParams }: { searchParams: { newuser?: string } }) {
-  const session = await getServerSession();
+  const session = await getCurrentUser();
   if (session) {
     redirect("/");
   }

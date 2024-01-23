@@ -1,14 +1,13 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { Navbar } from "@/components/Navbar";
 import { SignOutButton } from "@/components/signOutButton";
-import { getServerSession } from "next-auth";
+import { getCurrentUser } from "@/lib/actions";
 import { redirect } from "next/navigation";
 
 type ServerPageProps = {
   params: { serverid: string };
 };
 async function ServerPage({ params }: ServerPageProps) {
-  const session = await getServerSession(authOptions);
+  const session = await getCurrentUser();
 
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/");
