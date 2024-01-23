@@ -2,9 +2,10 @@ type InputProps = {
   label: string;
   type: string;
   name: string;
+  defaultValue?: string;
 };
 
-export function Input({ label, type, name }: InputProps) {
+export function Input({ label, type, name, defaultValue }: InputProps) {
   return (
     <label className="block mt-5">
       {label}
@@ -12,6 +13,7 @@ export function Input({ label, type, name }: InputProps) {
       <input
         type={type}
         name={name}
+        defaultValue={defaultValue}
         className="bg-d-gray-100 rounded-md w-full p-2 border-2 border-d-white hover:border-d-purple outline-none focus:border-d-purple"
         required
       />

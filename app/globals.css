@@ -7,3 +7,9 @@
   margin: 0;
   box-sizing: border-box;
 }
+.navbar-button {
+  @apply bg-d-gray-300 text-d-gray-100 w-12 h-12 grid place-items-center cursor-pointer rounded-full hover:rounded-2xl;
+}
+.backdrop {
+  @apply w-screen h-screen bg-d-gray-500 absolute left-0 top-0 z-10 opacity-70;
+}

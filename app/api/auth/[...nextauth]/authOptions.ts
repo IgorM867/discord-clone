@@ -98,6 +98,21 @@ export const authOptions: AuthOptions = {
       }
       return true;
     },
+    async session({ session }) {
+      try {
+        const user = await getUserByEmail(session.user?.email as string);
+        if (!user) return session;
+
+        const newSession = {
+          ...session,
+          user: user,
+        };
+        delete newSession.user.password;
+        return newSession;
+      } catch (error) {
+        return session;
+      }
+    },
   },
   pages: {
     signIn: "/auth/signin",

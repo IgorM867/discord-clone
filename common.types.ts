@@ -3,5 +3,10 @@ interface User {
   username: string;
   email: string;
   image: string | null;
-  password: string | null;
+  password?: string | null;
+}
+
+interface Server {
+  id: string;
+  name: string;
 }
