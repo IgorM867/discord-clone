@@ -5,8 +5,11 @@ import { SubmitButton } from "@/app/auth/signin/components/SubmitButton";
 import Image from "next/image";
 import Link from "next/link";
 import { useFormState } from "react-dom";
-import { initialState } from "../page";
 import { logIn } from "../lib/actions";
+
+const initialState = {
+  error: "",
+};
 
 export function SingInForm() {
   const [state, formAction] = useFormState(logIn, initialState);

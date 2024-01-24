@@ -3,10 +3,6 @@ import { SignInNewUserForm } from "./components/SignInNewUserForm";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/actions";
 
-export const initialState = {
-  error: "",
-};
-
 export default async function page({ searchParams }: { searchParams: { newuser?: string } }) {
   const session = await getCurrentUser();
   if (session) {
