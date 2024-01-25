@@ -72,3 +72,33 @@ export async function getServers(userId: string) {
 
   return results.rows as Server[];
 }
+export async function getServer(serverId: string) {
+  try {
+    const result = await sql`SELECT * FROM servers where id=${serverId};`;
+    return result.rows[0] as Server;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+export async function isServerAdmin(userId: string, serverId: string) {
+  try {
+    const result =
+      await sql`SELECT * FROM server_users where userId=${userId} AND serverId=${serverId} AND role='OWNER';`;
+
+    if (result.rows.length == 0) return false;
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+export async function deleteServer(serverId: string) {
+  try {
+    await sql`DELETE FROM servers where id=${serverId};`;
+  } catch (error) {
+    console.log(error);
+  }
+  revalidatePath("/servers/[serverid]", "page");
+  redirect(`/servers/direct-messages`);
+}
