@@ -10,3 +10,7 @@ interface Server {
   id: string;
   name: string;
 }
+interface Channel {
+  id: string;
+  name: string;
+}

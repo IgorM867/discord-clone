@@ -2,15 +2,21 @@
 import { useState } from "react";
 import { SvgXIcon } from "../../../../components/svgIcons/SvgXIcon";
 import Image from "next/image";
-import ServerMenu from "./ServerMenu";
+import { ServerMenu } from "./ServerMenu";
 
 type SidebarHeaderProps = {
   serverName: string;
   isAdmin: boolean;
   serverId: string;
+  showForm: () => void;
 };
 
-export default function SidebarHeader({ serverName, isAdmin, serverId }: SidebarHeaderProps) {
+export default function SidebarHeader({
+  serverName,
+  isAdmin,
+  serverId,
+  showForm,
+}: SidebarHeaderProps) {
   const [isMenuActive, setisMenuActive] = useState(false);
 
   const closeMenu = () => {
@@ -25,7 +31,7 @@ export default function SidebarHeader({ serverName, isAdmin, serverId }: Sidebar
       {isMenuActive ? (
         <>
           <SvgXIcon width={20} height={20} className="fill-white" />
-          <ServerMenu isAdmin={isAdmin} close={closeMenu} serverId={serverId} />
+          <ServerMenu isAdmin={isAdmin} close={closeMenu} serverId={serverId} showForm={showForm} />
         </>
       ) : (
         <Image src="/icons/angle-down.svg" alt="andle down icon" width={20} height={20} />

@@ -6,12 +6,13 @@ import { getServers } from "@/lib/actions";
 export async function Navbar({ serverId, user }: { serverId: string; user: User }) {
   const servers = await getServers(user.id);
 
+  console.log(servers);
   return (
     <nav className="bg-d-gray-500 p-3 flex flex-col gap-2 items-center z-10">
       <NavbarButton
         key={"ket1"}
         label="Direct Messages"
-        href="/servers/direct-messages"
+        href="/channels/direct-messages"
         isActive={serverId === "direct-messages"}
       >
         <Image src="/logos/icon_clyde_white.svg" alt="discord logo" width={30} height={30} />
@@ -21,7 +22,7 @@ export async function Navbar({ serverId, user }: { serverId: string; user: User 
         <NavbarButton
           key={server.id}
           label={server.name}
-          href={`/servers/${server.id}`}
+          href={`/channels/${server.channelid}`}
           isActive={serverId === server.id}
         >
           {server.name

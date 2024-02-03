@@ -5,5 +5,5 @@ export default async function Home() {
   const session = await getCurrentUser();
   if (!session) return redirect("/auth/signin");
 
-  redirect("/servers/direct-messages");
+  redirect("/channels/direct-messages");
 }
