@@ -30,14 +30,14 @@ export function ServerMenu({ isAdmin, serverId, close, showForm }: ServerMenuPro
         {isAdmin ? (
           <>
             <button
-              className="group text-d-gray-100 font-normal text-sm flex rounded-md justify-between items-center w-full p-2 hover:bg-d-purple hover:text-d-white"
+              className="group text-d-gray-150 font-normal text-sm flex rounded-md justify-between items-center w-full p-2 hover:bg-d-purple hover:text-d-white"
               onClick={showForm}
             >
               <p>Create Channel</p>
               <SvgCirclePlusIcon
                 width={14}
                 height={14}
-                className="fill-d-gray-100 group-hover:fill-d-white"
+                className="fill-d-gray-150 group-hover:fill-d-white"
               />
             </button>
             <button

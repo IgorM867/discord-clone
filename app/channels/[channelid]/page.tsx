@@ -37,6 +37,7 @@ export default async function ChannelPage({ params: { channelid } }: ChannelPage
         serverId={server.id}
         isAdmin={isAdmin}
         channels={channels}
+        channelId={channelid}
       />
       <div>
         Server Page <br></br>

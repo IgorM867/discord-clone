@@ -6,7 +6,6 @@ import { getServers } from "@/lib/actions";
 export async function Navbar({ serverId, user }: { serverId: string; user: User }) {
   const servers = await getServers(user.id);
 
-  console.log(servers);
   return (
     <nav className="bg-d-gray-500 p-3 flex flex-col gap-2 items-center z-10">
       <NavbarButton
