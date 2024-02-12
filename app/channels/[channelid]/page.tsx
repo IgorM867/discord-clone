@@ -1,6 +1,6 @@
 import { SideBar } from "@/app/channels/[channelid]/components/Sidebar";
 import { Navbar } from "@/components/Navbar";
-import { SignOutButton } from "@/components/signOutButton";
+import { SignOutButton } from "@/components/SignOutButton";
 import { getChannels, getCurrentUser, getServerByChannel, isServerAdmin } from "@/lib/actions";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -17,6 +17,7 @@ export default async function ChannelPage({ params: { channelid } }: ChannelPage
     redirect("/api/auth/signin?callbackUrl=/");
   }
   const server = await getServerByChannel(channelid);
+
   if (!server)
     return (
       <main className="flex flex-col items-center justify-center gap-8 h-screen ">
@@ -42,6 +43,7 @@ export default async function ChannelPage({ params: { channelid } }: ChannelPage
       <div>
         Server Page <br></br>
         <SignOutButton />
+        {channels.length == 0 && "NO TEXT CHANNELS"}
       </div>
     </main>
   );

@@ -38,7 +38,7 @@ export function SideBar({ serverName, serverId, isAdmin, channels, channelId }: 
 
   return (
     <>
-      <div className="bg-d-gray-400 w-56" onContextMenuCapture={handleContextMenu}>
+      <div className="bg-d-gray-400 w-56" onContextMenu={handleContextMenu}>
         <SidebarHeader
           serverName={serverName}
           isAdmin={isAdmin}
@@ -53,15 +53,12 @@ export function SideBar({ serverName, serverId, isAdmin, channels, channelId }: 
           contextMenuOptions={contextMenuOptions}
         />
       </div>
-      {contextMenu.isActive && (
-        <ContextMenu
-          ref={ref}
-          close={resetMenu}
-          options={contextMenuOptions}
-          x={contextMenu.x}
-          y={contextMenu.y}
-        />
-      )}
+      <ContextMenu
+        ref={ref}
+        options={contextMenuOptions}
+        contextMenu={contextMenu}
+        close={resetMenu}
+      />
       {isFormActive && (
         <NewChannelForm
           isOpen={isFormActive}

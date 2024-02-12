@@ -2,19 +2,36 @@ import { SvghashtagIcon } from "@/components/svgIcons/SvgHashtagIcon";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import Link from "next/link";
 import { ContextMenu } from "./ContextMenu";
+import { deleteChannel } from "@/lib/actions";
 
 type ChannelButtonProps = {
   channel: Channel;
   isActive: boolean;
   contextMenuOptions: { name: string; event: () => void }[];
+  firstChannelId: string | null;
 };
 
-export function ChannelButton({ channel, isActive, contextMenuOptions }: ChannelButtonProps) {
+export function ChannelButton({
+  channel,
+  isActive,
+  contextMenuOptions,
+  firstChannelId,
+}: ChannelButtonProps) {
   const { ref, contextMenu, handleContextMenu, resetMenu } = useContextMenu();
+
+  const newContextMenuOptions = [
+    ...contextMenuOptions,
+    {
+      name: "Delete Channel",
+      event: () => {
+        deleteChannel(channel.id, isActive, firstChannelId);
+      },
+    },
+  ];
 
   return (
     <>
-      <div onContextMenuCapture={handleContextMenu}>
+      <div onContextMenu={handleContextMenu}>
         <Link
           href={`/channels/${channel.id}`}
           key={channel.id}
@@ -26,16 +43,13 @@ export function ChannelButton({ channel, isActive, contextMenuOptions }: Channel
           {channel.name}
         </Link>
       </div>
-      {contextMenu.isActive && (
-        <ContextMenu
-          key={channel.id}
-          ref={ref}
-          close={resetMenu}
-          options={contextMenuOptions}
-          x={contextMenu.x}
-          y={contextMenu.y}
-        />
-      )}
+      <ContextMenu
+        key={channel.id}
+        ref={ref}
+        options={newContextMenuOptions}
+        contextMenu={contextMenu}
+        close={resetMenu}
+      />
     </>
   );
 }

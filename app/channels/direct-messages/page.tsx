@@ -1,5 +1,5 @@
 import { Navbar } from "@/components/Navbar";
-import { SignOutButton } from "@/components/signOutButton";
+import { SignOutButton } from "@/components/SignOutButton";
 import { getCurrentUser } from "@/lib/actions";
 import { redirect } from "next/navigation";
 

@@ -2,19 +2,24 @@ import { ForwardedRef, forwardRef } from "react";
 
 type ContextMenuProps = {
   options: { name: string; event: () => void }[];
-  x: number;
-  y: number;
+  contextMenu: {
+    isActive: boolean;
+    x: number;
+    y: number;
+  };
   close: () => void;
 };
 const ContextMenu = forwardRef(function (
-  { options, x, y, close }: ContextMenuProps,
+  { options, contextMenu, close }: ContextMenuProps,
   ref: ForwardedRef<HTMLMenuElement>
 ) {
   return (
     <menu
       ref={ref}
-      className="absolute bg-d-gray-600 text-d-gray-100 p-2 text-sm rounded-md"
-      style={{ left: x, top: y }}
+      className={`${
+        contextMenu.isActive ? "absolute" : "hidden"
+      } bg-d-gray-600 text-d-gray-100 p-2 text-sm rounded-md`}
+      style={{ left: contextMenu.x, top: contextMenu.y }}
       onClick={close}
     >
       {options.map((option, index) => (

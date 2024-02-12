@@ -11,12 +11,13 @@ export function ChannelsList({
 }) {
   return (
     <div className="text-d-gray-150 p-2">
-      {channels.map((channel) => (
+      {channels.map((channel, index) => (
         <ChannelButton
           channel={channel}
           isActive={activeChannel == channel.id}
           key={channel.id}
           contextMenuOptions={contextMenuOptions}
+          firstChannelId={channels.length > 1 ? channels[index == 0 ? 1 : 0].id : null}
         />
       ))}
     </div>

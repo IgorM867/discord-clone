@@ -21,11 +21,11 @@ export function useContextMenu() {
         setContextMenu(initialContextMenu);
       }
     };
-    document.addEventListener("contextmenu", handleRightClick);
+    document.addEventListener("contextmenu", handleRightClick, true);
     document.addEventListener("click", handleLeftClick);
 
     return () => {
-      document.removeEventListener("contextmenu", handleRightClick);
+      document.removeEventListener("contextmenu", handleRightClick, true);
       document.removeEventListener("click", handleLeftClick);
     };
   }, [ref]);
@@ -33,7 +33,6 @@ export function useContextMenu() {
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
-
     const { pageX, pageY } = e;
     setContextMenu({ isActive: true, x: pageX, y: pageY });
   };
