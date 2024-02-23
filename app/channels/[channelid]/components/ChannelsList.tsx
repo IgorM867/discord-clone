@@ -10,7 +10,7 @@ export function ChannelsList({
   contextMenuOptions: { name: string; event: () => void }[];
 }) {
   return (
-    <div className="text-d-gray-150 p-2">
+    <div className="text-d-gray-150 p-2 h-full">
       {channels.map((channel, index) => (
         <ChannelButton
           channel={channel}

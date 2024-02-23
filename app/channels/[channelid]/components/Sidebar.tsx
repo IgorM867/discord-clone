@@ -5,6 +5,7 @@ import SidebarHeader from "./SidebarHeader";
 import { ChannelsList } from "./ChannelsList";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { ContextMenu } from "./ContextMenu";
+import { SignOutButton } from "@/components/SignOutButton";
 
 type SideBarProps = {
   serverName: string;
@@ -38,7 +39,10 @@ export function SideBar({ serverName, serverId, isAdmin, channels, channelId }: 
 
   return (
     <>
-      <div className="bg-d-gray-400 w-56" onContextMenu={handleContextMenu}>
+      <div
+        className="bg-d-gray-400 w-56 min-w-56 flex flex-col justify-between"
+        onContextMenu={handleContextMenu}
+      >
         <SidebarHeader
           serverName={serverName}
           isAdmin={isAdmin}
@@ -52,6 +56,9 @@ export function SideBar({ serverName, serverId, isAdmin, channels, channelId }: 
           activeChannel={channelId}
           contextMenuOptions={contextMenuOptions}
         />
+        <div className="bg-d-gray-450 flex justify-end p-2">
+          <SignOutButton />
+        </div>
       </div>
       <ContextMenu
         ref={ref}

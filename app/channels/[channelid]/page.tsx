@@ -1,9 +1,9 @@
 import { SideBar } from "@/app/channels/[channelid]/components/Sidebar";
 import { Navbar } from "@/components/Navbar";
-import { SignOutButton } from "@/components/SignOutButton";
 import { getChannels, getCurrentUser, getServerByChannel, isServerAdmin } from "@/lib/actions";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { NoChannelsPage } from "./components/NoChannelsPage";
 
 type ChannelPageProps = {
   params: {
@@ -40,11 +40,14 @@ export default async function ChannelPage({ params: { channelid } }: ChannelPage
         channels={channels}
         channelId={channelid}
       />
-      <div>
-        Server Page <br></br>
-        <SignOutButton />
-        {channels.length == 0 && "NO TEXT CHANNELS"}
-      </div>
+
+      {channels.length == 0 ? (
+        <NoChannelsPage />
+      ) : (
+        <>
+          Server Page <br></br>
+        </>
+      )}
     </main>
   );
 }
