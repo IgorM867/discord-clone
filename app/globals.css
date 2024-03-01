@@ -13,3 +13,6 @@
 .backdrop {
   @apply w-screen h-screen bg-d-gray-500 absolute left-0 top-0 z-10 opacity-70;
 }
+.scrollbar {
+  scrollbar-color: #1a1b1e #2b2d31;
+}

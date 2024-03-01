@@ -1,9 +1,10 @@
 import { SideBar } from "@/app/channels/[channelid]/components/Sidebar";
 import { Navbar } from "@/components/Navbar";
 import { getChannels, getCurrentUser, getServerByChannel, isServerAdmin } from "@/lib/actions";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 import { NoChannelsPage } from "./components/NoChannelsPage";
+import { Channel } from "./components/Channel";
+import { Error } from "@/components/Error";
 
 type ChannelPageProps = {
   params: {
@@ -18,13 +19,7 @@ export default async function ChannelPage({ params: { channelid } }: ChannelPage
   }
   const server = await getServerByChannel(channelid);
 
-  if (!server)
-    return (
-      <main className="flex flex-col items-center justify-center gap-8 h-screen ">
-        <Image src="/logos/full_logo_white.svg" alt="Discord Logo" width={400} height={75} />
-        <p className="text-2xl text-d-white">Something went wrong! Please refresh.</p>
-      </main>
-    );
+  if (!server) return <Error />;
 
   const isAdmin = await isServerAdmin(session.user.id, server.id);
   const channels = await getChannels(server.id);
@@ -45,7 +40,7 @@ export default async function ChannelPage({ params: { channelid } }: ChannelPage
         <NoChannelsPage />
       ) : (
         <>
-          Server Page <br></br>
+          <Channel channelId={channelid} />
         </>
       )}
     </main>

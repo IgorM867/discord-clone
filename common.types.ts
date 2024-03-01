@@ -5,7 +5,6 @@ interface User {
   image: string | null;
   password?: string | null;
 }
-
 interface Server {
   id: string;
   name: string;
@@ -14,4 +13,11 @@ interface Server {
 interface Channel {
   id: string;
   name: string;
+}
+interface Message {
+  id: string;
+  creatorid: string;
+  content: string;
+  createdat: Date;
+  channelid: string;
 }

@@ -24,17 +24,17 @@ export default function SidebarHeader({
   };
   return (
     <header
-      className="text-d-gray-100 p-4 font-bold shadow-md hover:bg-d-gray-200 cursor-pointer flex relative"
+      className="text-d-gray-100 font-medium p-3 px-4 pr-5 shadow-md hover:bg-d-gray-200 cursor-pointer flex relative items-center"
       onClick={() => setisMenuActive(!isMenuActive)}
     >
       <h2 className="overflow-ellipsis overflow-hidden whitespace-nowrap w-full">{serverName}</h2>
       {isMenuActive ? (
         <>
-          <SvgXIcon width={20} height={20} className="fill-white" />
+          <SvgXIcon width={12} height={12} className="fill-white" />
           <ServerMenu isAdmin={isAdmin} close={closeMenu} serverId={serverId} showForm={showForm} />
         </>
       ) : (
-        <Image src="/icons/angle-down.svg" alt="andle down icon" width={20} height={20} />
+        <Image src="/icons/angle-down.svg" alt="andle down icon" width={12} height={12} />
       )}
     </header>
   );

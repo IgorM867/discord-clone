@@ -40,7 +40,7 @@ export function SideBar({ serverName, serverId, isAdmin, channels, channelId }: 
   return (
     <>
       <div
-        className="bg-d-gray-400 w-56 min-w-56 flex flex-col justify-between"
+        className="bg-d-gray-400 w-60 min-w-60 flex flex-col justify-between"
         onContextMenu={handleContextMenu}
       >
         <SidebarHeader

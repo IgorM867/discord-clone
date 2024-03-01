@@ -154,6 +154,17 @@ export async function getChannels(serverId: string) {
     return [];
   }
 }
+export async function getChannel(channelId: string) {
+  try {
+    const result = await sql`SELECT * FROM channels where id=${channelId};`;
+    return result.rows.map((channel) => {
+      return { id: channel.id, name: channel.name };
+    })[0] as Channel;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
 export async function deleteChannel(
   channelId: string,
   isActive: boolean,
@@ -174,4 +185,21 @@ export async function deleteChannel(
       const server = await getServer(serverId);
       redirect(`/channels/${server?.nullchannelid}`);
     }
+}
+export async function sendMessage(content: string, creatorId: string, channelId: string) {
+  try {
+    await sql`INSERT INTO messages (CreatorId, Content, ChannelId) VALUES (${creatorId},${content},${channelId});`;
+  } catch (error) {
+    console.log(error);
+  }
+  revalidatePath(`/channels/${channelId}`, "page");
+}
+export async function getMessages(channelId: string) {
+  try {
+    const result = await sql`SELECT * FROM messages where channelId=${channelId};`;
+    return result.rows as Message[];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 }
