@@ -1,14 +1,15 @@
 import { MessageForm } from "./MessageForm";
-import { getCurrentUser, getMessages, sendMessage } from "@/lib/actions";
+import { getCurrentUser, sendMessage } from "@/lib/actions";
 import { redirect } from "next/navigation";
 import { MessagesList } from "./MessagesList";
+import { ChatLoadingSkeleton } from "./ChatLoadingSkeleton";
+import { Suspense } from "react";
 
 async function Chat({ channel }: { channel: Channel }) {
   const session = await getCurrentUser();
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/");
   }
-  const messages = await getMessages(channel.id);
 
   async function handleFormSubmit(formData: FormData) {
     "use server";
@@ -19,7 +20,9 @@ async function Chat({ channel }: { channel: Channel }) {
 
   return (
     <div className="h-[calc(100%_-_48px)]">
-      <MessagesList channelName={channel.name} messages={messages} />
+      <Suspense fallback={<ChatLoadingSkeleton />}>
+        <MessagesList channel={channel} />
+      </Suspense>
       <MessageForm channelName={channel.name} handleFormSubmit={handleFormSubmit} />
     </div>
   );

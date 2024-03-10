@@ -2,19 +2,21 @@ import { Fragment } from "react";
 import { ChannelWelcomeMessage } from "./ChannelWelcomeMessage";
 import { Message } from "./Message";
 import { MessagesDivider } from "./MessagesDivider";
+import { getMessages } from "@/lib/actions";
 
 type MessagesListProps = {
-  messages: Array<Message & { creatorname: string }>;
-  channelName: string;
+  channel: Channel;
 };
 
-function MessagesList({ messages, channelName }: MessagesListProps) {
+async function MessagesList({ channel }: MessagesListProps) {
+  const messages = await getMessages(channel.id);
+
   let lastDate: Date | null = null;
   let lastUserId: string | null = null;
 
   return (
     <ol className="overflow-y-scroll  h-[calc(100%_-_64px)] flex flex-col scrollbar ">
-      <ChannelWelcomeMessage channelName={channelName} />
+      <ChannelWelcomeMessage channelName={channel.name} />
       {messages.map((message) => {
         const isNewDay = checkIsNewDay(lastDate, message.createdat);
         const isNewUser = lastUserId !== message.creatorid;
