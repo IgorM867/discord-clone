@@ -196,8 +196,9 @@ export async function sendMessage(content: string, creatorId: string, channelId:
 }
 export async function getMessages(channelId: string) {
   try {
-    const result = await sql`SELECT * FROM messages where channelId=${channelId};`;
-    return result.rows as Message[];
+    const result =
+      await sql`SELECT messages.id,creatorid,content,createdat,channelid,users.username as creatorname FROM messages JOIN users on messages.creatorid = users.id where channelId=${channelId} Order By createdat;`;
+    return result.rows as Array<Message & { creatorname: string }>;
   } catch (error) {
     console.log(error);
     return [];

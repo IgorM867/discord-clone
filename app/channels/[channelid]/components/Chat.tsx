@@ -1,7 +1,7 @@
 import { MessageForm } from "./MessageForm";
 import { getCurrentUser, getMessages, sendMessage } from "@/lib/actions";
 import { redirect } from "next/navigation";
-import { ChannelWelcomeMessage } from "./ChannelWelcomeMessage";
+import { MessagesList } from "./MessagesList";
 
 async function Chat({ channel }: { channel: Channel }) {
   const session = await getCurrentUser();
@@ -19,12 +19,7 @@ async function Chat({ channel }: { channel: Channel }) {
 
   return (
     <div className="h-[calc(100%_-_48px)]">
-      <ol className="overflow-y-scroll pl-5 h-[calc(100%_-_64px)] flex flex-col scrollbar">
-        <ChannelWelcomeMessage channelName={channel.name} />
-        {messages.map((message) => (
-          <li key={message.id}>{message.content}</li>
-        ))}
-      </ol>
+      <MessagesList channelName={channel.name} messages={messages} />
       <MessageForm channelName={channel.name} handleFormSubmit={handleFormSubmit} />
     </div>
   );
