@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
-import { SvgXIcon } from "../../../../components/svgIcons/SvgXIcon";
 import Image from "next/image";
 import { ServerMenu } from "./ServerMenu";
+import { SvgXIcon } from "../../../../components/svgIcons/SvgXIcon";
+import { useState } from "react";
 
 type SidebarHeaderProps = {
   serverName: string;
@@ -11,12 +11,7 @@ type SidebarHeaderProps = {
   showForm: () => void;
 };
 
-export default function SidebarHeader({
-  serverName,
-  isAdmin,
-  serverId,
-  showForm,
-}: SidebarHeaderProps) {
+function SidebarHeader({ serverName, isAdmin, serverId, showForm }: SidebarHeaderProps) {
   const [isMenuActive, setisMenuActive] = useState(false);
 
   const closeMenu = () => {
@@ -24,7 +19,7 @@ export default function SidebarHeader({
   };
   return (
     <header
-      className="text-d-gray-100 font-medium p-3 px-4 pr-5 shadow-md hover:bg-d-gray-200 cursor-pointer flex relative items-center"
+      className="text-d-gray-100 font-medium p-3 px-4 pr-5 shadow-md hover:bg-d-gray-300 cursor-pointer flex relative items-center"
       onClick={() => setisMenuActive(!isMenuActive)}
     >
       <h2 className="overflow-ellipsis overflow-hidden whitespace-nowrap w-full">{serverName}</h2>
@@ -39,3 +34,4 @@ export default function SidebarHeader({
     </header>
   );
 }
+export { SidebarHeader };

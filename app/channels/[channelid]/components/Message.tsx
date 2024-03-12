@@ -7,7 +7,7 @@ type MessageProps = {
 
 function Message({ message, withUser }: MessageProps) {
   return (
-    <li className="hover:bg-d-gray-400 pl-5 font-normal flex last:mb-6 group py-1">
+    <li className="hover:bg-d-gray-450 pl-5 font-normal flex last:mb-6 group py-1">
       {withUser ? (
         <>
           <div className="w-12">

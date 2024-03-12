@@ -5,7 +5,7 @@ type InputProps = {
   defaultValue?: string;
 };
 
-export function Input({ label, type, name, defaultValue }: InputProps) {
+function Input({ label, type, name, defaultValue }: InputProps) {
   return (
     <label className="block mt-5">
       {label}
@@ -20,3 +20,4 @@ export function Input({ label, type, name, defaultValue }: InputProps) {
     </label>
   );
 }
+export { Input };

@@ -73,7 +73,7 @@ function ChatLoadingSkeleton() {
 function SkeletonBlock({ className, circle }: { className: string; circle?: boolean }) {
   return (
     <div
-      className={`bg-d-gray-500 animate-pulse ${
+      className={`bg-d-gray-550 animate-pulse ${
         circle ? "size-10 rounded-full" : "rounded-md"
       } ${className}`}
     />

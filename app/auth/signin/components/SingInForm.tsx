@@ -1,9 +1,9 @@
 "use client";
+import Image from "next/image";
+import Link from "next/link";
 import { Input } from "@/components/Input";
 import { SignInGoogleButton } from "@/app/auth/signin/components/SignInGoogleButton";
 import { SubmitButton } from "@/app/auth/signin/components/SubmitButton";
-import Image from "next/image";
-import Link from "next/link";
 import { useFormState } from "react-dom";
 import { logIn } from "../lib/actions";
 
@@ -11,7 +11,7 @@ const initialState = {
   error: "",
 };
 
-export function SingInForm() {
+function SingInForm() {
   const [state, formAction] = useFormState(logIn, initialState);
   return (
     <form className="bg-d-white rounded-2xl p-9 min-w-[550px] flex flex-col" action={formAction}>
@@ -28,3 +28,4 @@ export function SingInForm() {
     </form>
   );
 }
+export { SingInForm };

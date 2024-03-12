@@ -1,8 +1,8 @@
 "use client";
-import { signIn } from "next-auth/react";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 
-export function SignInGoogleButton() {
+function SignInGoogleButton() {
   return (
     <button
       type="button"
@@ -14,3 +14,4 @@ export function SignInGoogleButton() {
     </button>
   );
 }
+export { SignInGoogleButton };

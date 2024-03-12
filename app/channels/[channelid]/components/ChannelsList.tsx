@@ -1,14 +1,12 @@
 import { ChannelButton } from "./ChannelButton";
 
-export function ChannelsList({
-  channels,
-  activeChannel,
-  contextMenuOptions,
-}: {
+type ChannelsListProps = {
   channels: Channel[];
   activeChannel: string;
   contextMenuOptions: { name: string; event: () => void }[];
-}) {
+};
+
+function ChannelsList({ channels, activeChannel, contextMenuOptions }: ChannelsListProps) {
   return (
     <div className="text-d-gray-150 p-2 h-full">
       {channels.map((channel, index) => (
@@ -23,3 +21,4 @@ export function ChannelsList({
     </div>
   );
 }
+export { ChannelsList };

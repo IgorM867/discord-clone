@@ -1,10 +1,12 @@
 import { SideBar } from "@/app/channels/[channelid]/components/Sidebar";
 import { Navbar } from "@/components/Navbar";
-import { getChannels, getCurrentUser, getServerByChannel, isServerAdmin } from "@/lib/actions";
-import { redirect } from "next/navigation";
+import { Error } from "@/components/Error";
 import { NoChannelsPage } from "./components/NoChannelsPage";
 import { Channel } from "./components/Channel";
-import { Error } from "@/components/Error";
+import { getServerByChannel, isServerAdmin } from "@/lib/actions/serverActions";
+import { getCurrentUser } from "@/lib/actions/userActions";
+import { getChannels } from "@/lib/actions/channelActions";
+import { redirect } from "next/navigation";
 
 type ChannelPageProps = {
   params: {
@@ -25,7 +27,7 @@ export default async function ChannelPage({ params: { channelid } }: ChannelPage
   const channels = await getChannels(server.id);
 
   return (
-    <main className="bg-d-gray-300 h-screen flex">
+    <main className="bg-d-gray-400 h-screen flex">
       <Navbar serverId={server.id} user={session.user} />
       <SideBar
         serverName={server.name}

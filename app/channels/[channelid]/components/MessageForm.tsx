@@ -20,7 +20,7 @@ function MessageForm({ channelName, handleFormSubmit }: MessageFormProps) {
     >
       <input
         name="message"
-        className="bg-d-gray-175 w-full rounded-md p-2 px-5 outline-none text-d-gray-100 text-base placeholder:text-d-gray-150"
+        className="bg-d-gray-250 w-full rounded-md p-2 px-5 outline-none text-d-gray-100 text-base placeholder:text-d-gray-150"
         placeholder={`Message #${channelName}`}
         autoComplete="off"
         type="text"

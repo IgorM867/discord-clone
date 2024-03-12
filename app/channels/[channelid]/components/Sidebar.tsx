@@ -1,11 +1,11 @@
 "use client";
-import { useState } from "react";
-import { NewChannelForm } from "./NewChannelForm";
-import SidebarHeader from "./SidebarHeader";
-import { ChannelsList } from "./ChannelsList";
-import { useContextMenu } from "@/hooks/useContextMenu";
-import { ContextMenu } from "./ContextMenu";
 import { SignOutButton } from "@/components/SignOutButton";
+import { SidebarHeader } from "./SidebarHeader";
+import { ChannelsList } from "./ChannelsList";
+import { ContextMenu } from "./ContextMenu";
+import { NewChannelForm } from "./NewChannelForm";
+import { useContextMenu } from "@/hooks/useContextMenu";
+import { useState } from "react";
 
 type SideBarProps = {
   serverName: string;
@@ -16,7 +16,7 @@ type SideBarProps = {
   channelId: string;
 };
 
-export function SideBar({ serverName, serverId, isAdmin, channels, channelId }: SideBarProps) {
+function SideBar({ serverName, serverId, isAdmin, channels, channelId }: SideBarProps) {
   const [isFormActive, setIsFormActive] = useState(false);
   const { ref, contextMenu, handleContextMenu, resetMenu } = useContextMenu();
 
@@ -40,7 +40,7 @@ export function SideBar({ serverName, serverId, isAdmin, channels, channelId }: 
   return (
     <>
       <div
-        className="bg-d-gray-400 w-60 min-w-60 flex flex-col justify-between"
+        className="bg-d-gray-450 w-60 min-w-60 flex flex-col justify-between"
         onContextMenu={handleContextMenu}
       >
         <SidebarHeader
@@ -56,7 +56,7 @@ export function SideBar({ serverName, serverId, isAdmin, channels, channelId }: 
           activeChannel={channelId}
           contextMenuOptions={contextMenuOptions}
         />
-        <div className="bg-d-gray-450 flex justify-end p-2">
+        <div className="bg-d-gray-500 flex justify-end p-2">
           <SignOutButton />
         </div>
       </div>
@@ -78,3 +78,4 @@ export function SideBar({ serverName, serverId, isAdmin, channels, channelId }: 
     </>
   );
 }
+export { SideBar };

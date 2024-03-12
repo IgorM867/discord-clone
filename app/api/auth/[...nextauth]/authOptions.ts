@@ -1,8 +1,8 @@
-import { createUser, getUserByEmail } from "@/lib/actions";
-import { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { AuthOptions } from "next-auth";
 import { compare, hash } from "bcrypt";
+import { createUser, getUserByEmail } from "@/lib/actions/userActions";
 
 export const authOptions: AuthOptions = {
   providers: [

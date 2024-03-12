@@ -2,8 +2,9 @@ import { SvgCircleArrowLeftIcon } from "@/components/svgIcons/SvgCircleArrowLeft
 import { SvgCirclePlusIcon } from "@/components/svgIcons/SvgCirclePlusIcon";
 import { SvgTrashIcon } from "@/components/svgIcons/SvgTrashIcon";
 import { SvgUserPlusIcon } from "@/components/svgIcons/SvgUserPlusIcon";
+import { ServerMenuButton } from "./ServerMenuButton";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
-import { deleteServer } from "@/lib/actions";
+import { deleteServer } from "@/lib/actions/serverActions";
 
 type ServerMenuProps = {
   isAdmin: boolean;
@@ -12,57 +13,63 @@ type ServerMenuProps = {
   showForm: () => void;
 };
 
-export function ServerMenu({ isAdmin, serverId, close, showForm }: ServerMenuProps) {
+function ServerMenu({ isAdmin, serverId, close, showForm }: ServerMenuProps) {
   const ref = useOnClickOutside<HTMLDivElement>(close);
 
   return (
     <>
       <div ref={ref} className="absolute bg-d-gray-600 top-16 w-52 left-2 rounded-md px-2 py-3">
-        <button className="group text-d-purple font-normal text-sm flex rounded-md justify-between items-center w-full p-2 hover:bg-d-purple hover:text-d-white">
-          <p>Invite People</p>
+        <ServerMenuButton
+          value="Invite People"
+          onClick={() => {}}
+          className="text-d-purple hover:bg-d-purple hover:text-d-white"
+        >
           <SvgUserPlusIcon
             width={14}
             height={14}
             className="fill-d-purple group-hover:fill-d-white"
           />
-        </button>
-
+        </ServerMenuButton>
         {isAdmin ? (
           <>
-            <button
-              className="group text-d-gray-150 font-normal text-sm flex rounded-md justify-between items-center w-full p-2 hover:bg-d-purple hover:text-d-white"
+            <ServerMenuButton
+              value="Create Channel"
               onClick={showForm}
+              className="text-d-gray-150 hover:bg-d-purple hover:text-d-white"
             >
-              <p>Create Channel</p>
               <SvgCirclePlusIcon
                 width={14}
                 height={14}
                 className="fill-d-gray-150 group-hover:fill-d-white"
               />
-            </button>
-            <button
-              className="group text-d-red font-normal text-sm flex rounded-md justify-between items-center w-full p-2 hover:bg-d-red hover:text-d-white"
+            </ServerMenuButton>
+            <ServerMenuButton
+              value="Delete Server"
               onClick={async () => await deleteServer(serverId)}
+              className="text-d-red hover:bg-d-red hover:text-d-white"
             >
-              <p>Delete Server</p>
               <SvgTrashIcon
                 width={14}
                 height={14}
                 className="fill-d-red group-hover:fill-d-white"
               />
-            </button>
+            </ServerMenuButton>
           </>
         ) : (
-          <button className="group text-d-red font-normal text-sm flex rounded-md justify-between items-center w-full p-2 hover:bg-d-red hover:text-d-white">
-            <p>Leave Server</p>
+          <ServerMenuButton
+            value="Leave Server"
+            onClick={() => {}}
+            className="text-d-red hover:bg-d-red hover:text-d-white"
+          >
             <SvgCircleArrowLeftIcon
               width={14}
               height={14}
               className="fill-d-red group-hover:fill-d-white"
             />
-          </button>
+          </ServerMenuButton>
         )}
       </div>
     </>
   );
 }
+export { ServerMenu };

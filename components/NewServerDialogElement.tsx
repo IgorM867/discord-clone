@@ -1,9 +1,9 @@
 "use client";
 import { Input } from "./Input";
 import { Dispatch, SetStateAction, useRef } from "react";
-import { createServer } from "@/lib/actions";
 import { useFormState, useFormStatus } from "react-dom";
 import { SvgXIcon } from "./svgIcons/SvgXIcon";
+import { createServer } from "@/lib/actions/serverActions";
 
 const initialState = {
   error: "",

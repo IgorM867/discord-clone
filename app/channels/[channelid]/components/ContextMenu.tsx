@@ -1,4 +1,5 @@
 import { ForwardedRef, forwardRef } from "react";
+import { ContextMenuButton } from "./ContextMenuButton";
 
 type ContextMenuProps = {
   options: { name: string; event: () => void }[];
@@ -23,15 +24,10 @@ const ContextMenu = forwardRef(function (
       onClick={close}
     >
       {options.map((option, index) => (
-        <button
-          key={index}
-          className="p-2 hover:bg-d-purple cursor-pointer rounded-sm block w-full text-left"
-          onClick={option.event}
-        >
-          {option.name}
-        </button>
+        <ContextMenuButton key={index} option={option} />
       ))}
     </menu>
   );
 });
+
 export { ContextMenu };

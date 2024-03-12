@@ -8,7 +8,7 @@ type NavbarButtonProps = {
   children: ReactNode;
 };
 
-export function NavbarButton({ label, href, isActive, children }: NavbarButtonProps) {
+function NavbarButton({ label, href, isActive, children }: NavbarButtonProps) {
   return (
     <Link
       href={href}
@@ -23,3 +23,4 @@ export function NavbarButton({ label, href, isActive, children }: NavbarButtonPr
     </Link>
   );
 }
+export { NavbarButton };

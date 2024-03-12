@@ -1,6 +1,6 @@
 import "./globals.css";
-import type { Metadata } from "next";
 import localFont from "next/font/local";
+import type { Metadata } from "next";
 
 const ginto = localFont({
   src: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${ginto.className} bg-d-gray-400`}>{children}</body>
+      <body className={`${ginto.className} bg-d-gray-450`}>{children}</body>
     </html>
   );
 }

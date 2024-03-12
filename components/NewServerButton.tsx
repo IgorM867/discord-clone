@@ -3,7 +3,7 @@ import { useState } from "react";
 import { SvgPlusIcon } from "./svgIcons/SvgPlusIcon";
 import { NewServerDialogElement } from "./NewServerDialogElement";
 
-export function NewServerButton({ username }: { username: string }) {
+function NewServerButton({ username }: { username: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
     setIsOpen(true);
@@ -25,3 +25,4 @@ export function NewServerButton({ username }: { username: string }) {
     </>
   );
 }
+export { NewServerButton };

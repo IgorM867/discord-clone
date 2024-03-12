@@ -1,8 +1,9 @@
 import { MessageForm } from "./MessageForm";
-import { getCurrentUser, sendMessage } from "@/lib/actions";
-import { redirect } from "next/navigation";
 import { MessagesList } from "./MessagesList";
 import { ChatLoadingSkeleton } from "./ChatLoadingSkeleton";
+import { getCurrentUser } from "@/lib/actions/userActions";
+import { sendMessage } from "@/lib/actions";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 async function Chat({ channel }: { channel: Channel }) {

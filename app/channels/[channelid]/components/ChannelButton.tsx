@@ -1,8 +1,8 @@
-import { SvghashtagIcon } from "@/components/svgIcons/SvgHashtagIcon";
-import { useContextMenu } from "@/hooks/useContextMenu";
 import Link from "next/link";
+import { SvghashtagIcon } from "@/components/svgIcons/SvgHashtagIcon";
 import { ContextMenu } from "./ContextMenu";
-import { deleteChannel } from "@/lib/actions";
+import { useContextMenu } from "@/hooks/useContextMenu";
+import { deleteChannel } from "@/lib/actions/channelActions";
 
 type ChannelButtonProps = {
   channel: Channel;
@@ -11,7 +11,7 @@ type ChannelButtonProps = {
   firstChannelId: string | null;
 };
 
-export function ChannelButton({
+function ChannelButton({
   channel,
   isActive,
   contextMenuOptions,
@@ -35,7 +35,7 @@ export function ChannelButton({
         <Link
           href={`/channels/${channel.id}`}
           key={channel.id}
-          className={`flex items-center text-base gap-2 hover:bg-d-gray-250 p-1 pl-2 rounded-md cursor-pointer ${
+          className={`flex items-center text-base gap-2 hover:bg-d-gray-350 p-1 pl-2 rounded-md cursor-pointer ${
             isActive && "text-d-white"
           }`}
         >
@@ -53,3 +53,4 @@ export function ChannelButton({
     </>
   );
 }
+export { ChannelButton };
