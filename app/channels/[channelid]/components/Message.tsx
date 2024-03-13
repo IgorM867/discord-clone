@@ -19,7 +19,7 @@ function Message({ message, withUser }: MessageProps) {
             <div className="text-d-gray-100 font-medium">
               <span className="hover:underline cursor-pointer mr-2">{message.creatorname}</span>
 
-              <span className="text-d-gray-150 text-xs">{getDateAndTime(message.createdat)}</span>
+              <span className="text-d-gray-150 text-xs">{getDateAndTime(message.created_at)}</span>
             </div>
             <div className="text-d-gray-100 ">{message.content}</div>
           </div>
@@ -27,7 +27,7 @@ function Message({ message, withUser }: MessageProps) {
       ) : (
         <>
           <span className="invisible flex text-[10px] text-d-gray-150 w-12 h-full items-center group-hover:visible">
-            {getTime(message.createdat)}
+            {getTime(message.created_at)}
           </span>
 
           <div className="text-d-gray-100">{message.content}</div>

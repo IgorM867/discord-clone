@@ -8,7 +8,7 @@ interface User {
 interface Server {
   id: string;
   name: string;
-  nullchannelid: string;
+  null_channel_id: string;
 }
 interface Channel {
   id: string;
@@ -16,8 +16,8 @@ interface Channel {
 }
 interface Message {
   id: string;
-  creatorid: string;
+  creator_id: string;
   content: string;
-  createdat: Date;
-  channelid: string;
+  created_at: Date;
+  channel_id: string;
 }

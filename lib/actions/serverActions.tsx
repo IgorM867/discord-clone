@@ -20,12 +20,12 @@ export async function createServer(
   let result = null;
   try {
     result = await sql`WITH server AS (
-          INSERT INTO servers (name,nullChannelId) VALUES (${servername},nextval('channels_sequence')) RETURNING id
+          INSERT INTO servers (name,null_channel_id) VALUES (${servername},nextval('channels_sequence')) RETURNING id
       ), server_user AS (
-          INSERT INTO server_users (userId, serverId, role)
+          INSERT INTO server_users (user_id, server_id, role)
           VALUES (${user.id}, (SELECT id FROM server), 'OWNER')
       )
-      INSERT INTO channels (id,name,serverId) VALUES(nextval('channels_sequence'),'general',(SELECT id FROM server)) RETURNING id;`;
+      INSERT INTO channels (id,name,server_id) VALUES(nextval('channels_sequence'),'general',(SELECT id FROM server)) RETURNING id;`;
   } catch (error) {
     console.log(error);
     return { error: "Database error" };
@@ -36,12 +36,12 @@ export async function createServer(
 
 export async function getServers(userId: string) {
   const results =
-    await sql`SELECT DISTINCT ON (servers.id) servers.id AS id, servers.name, channels.id AS channelId, servers.nullChannelId FROM servers
-      JOIN server_users on server_users.serverId = servers.id
-      LEFT JOIN channels on channels.serverId = servers.id
-      WHERE server_users.userId = ${userId};`;
+    await sql`SELECT DISTINCT ON (servers.id) servers.id AS id, servers.name, channels.id AS channel_id, servers.null_channel_id FROM servers
+      JOIN server_users on server_users.server_id = servers.id
+      LEFT JOIN channels on channels.server_id = servers.id
+      WHERE server_users.user_id = ${userId};`;
 
-  return results.rows as Array<Server & { channelid: string }>;
+  return results.rows as Array<Server & { channel_id: string }>;
 }
 
 export async function getServer(serverId: string) {
@@ -57,8 +57,8 @@ export async function getServer(serverId: string) {
 export async function getServerByChannel(channelId: string) {
   try {
     const result =
-      await sql`SELECT servers.id, servers.name, servers.nullChannelId FROM servers LEFT JOIN channels on servers.id = channels.serverId 
-        WHERE channels.id=${channelId} OR servers.nullChannelId=${channelId};`;
+      await sql`SELECT servers.id, servers.name, servers.null_channel_id FROM servers LEFT JOIN channels on servers.id = channels.server_id 
+        WHERE channels.id=${channelId} OR servers.null_channel_id=${channelId};`;
     return result.rows[0] as Server;
   } catch (error) {
     console.log(error);
@@ -69,7 +69,7 @@ export async function getServerByChannel(channelId: string) {
 export async function isServerAdmin(userId: string, serverId: string) {
   try {
     const result =
-      await sql`SELECT * FROM server_users where userId=${userId} AND serverId=${serverId} AND role='OWNER';`;
+      await sql`SELECT * FROM server_users where user_id=${userId} AND server_id=${serverId} AND role='OWNER';`;
 
     if (result.rows.length == 0) return false;
     return true;

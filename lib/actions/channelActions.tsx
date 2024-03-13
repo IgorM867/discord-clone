@@ -18,7 +18,7 @@ export async function createChannel(
   let result = null;
   try {
     result =
-      await sql`INSERT INTO channels (id,name,serverid) VALUES (nextval('channels_sequence'),${channelName},${serverId}) returning id`;
+      await sql`INSERT INTO channels (id,name,server_id) VALUES (nextval('channels_sequence'),${channelName},${serverId}) returning id`;
   } catch (error) {
     console.log(error);
     return { error: "Database error" };
@@ -29,7 +29,7 @@ export async function createChannel(
 
 export async function getChannels(serverId: string) {
   try {
-    const result = await sql`SELECT * FROM channels where serverId=${serverId};`;
+    const result = await sql`SELECT * FROM channels where server_id=${serverId};`;
     return result.rows.map((channel) => {
       return { id: channel.id, name: channel.name };
     }) as Channel[];
@@ -58,7 +58,7 @@ export async function deleteChannel(
 ) {
   let serverId;
   try {
-    const result = await sql`DELETE FROM channels where id=${channelId} returning serverId;`;
+    const result = await sql`DELETE FROM channels where id=${channelId} returning server_id;`;
     serverId = result.rows[0].serverid;
   } catch (error) {
     console.log(error);
@@ -69,6 +69,6 @@ export async function deleteChannel(
       redirect(`/channels/${firstChannelId}`);
     } else {
       const server = await getServer(serverId);
-      redirect(`/channels/${server?.nullchannelid}`);
+      redirect(`/channels/${server?.null_channel_id}`);
     }
 }

@@ -21,7 +21,7 @@ async function Navbar({ serverId, user }: { serverId: string; user: User }) {
         <NavbarButton
           key={server.id}
           label={server.name}
-          href={`/channels/${server.channelid || server.nullchannelid}`}
+          href={`/channels/${server.channel_id || server.null_channel_id}`}
           isActive={serverId === server.id}
         >
           {server.name

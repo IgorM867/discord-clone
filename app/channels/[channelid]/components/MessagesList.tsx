@@ -18,14 +18,14 @@ async function MessagesList({ channel }: MessagesListProps) {
     <ol className="overflow-y-scroll  h-[calc(100%_-_64px)] flex flex-col scrollbar ">
       <ChannelWelcomeMessage channelName={channel.name} />
       {messages.map((message) => {
-        const isNewDay = checkIsNewDay(lastDate, message.createdat);
-        const isNewUser = lastUserId !== message.creatorid;
-        if (isNewDay) lastDate = message.createdat;
-        if (isNewUser) lastUserId = message.creatorid;
+        const isNewDay = checkIsNewDay(lastDate, message.created_at);
+        const isNewUser = lastUserId !== message.creator_id;
+        if (isNewDay) lastDate = message.created_at;
+        if (isNewUser) lastUserId = message.creator_id;
 
         return (
           <Fragment key={message.id}>
-            {isNewDay && <MessagesDivider text={getDate(message.createdat)} />}
+            {isNewDay && <MessagesDivider text={getDate(message.created_at)} />}
             <Message message={message} withUser={isNewUser || isNewDay} />
           </Fragment>
         );
