@@ -80,25 +80,6 @@ export async function sendFriendRequest(prevState: RequestState | null, formData
   }
 }
 
-export async function getPendingFriendRequests() {
-  const session = await getCurrentUser();
-  if (!session?.user) return [];
-
-  try {
-    const { rows } = await sql`
-    SELECT users.id,username,email,image,'Outgoing' as request_direction FROM users 
-    JOIN user_relationships on users.id = user_id2 WHERE user_id1=${session.user.id} AND status = 'pending'
-    UNION
-    SELECT users.id,username,email,image,'Incoming' as request_direction FROM users 
-    JOIN user_relationships on users.id = user_id1 WHERE user_id2=${session.user.id} AND status = 'pending';`;
-
-    return rows as Array<User & { request_direction: "Outgoing" | "Incoming" }>;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-}
-
 export async function deletePendingFriend(userId: string) {
   const session = await getCurrentUser();
   if (!session?.user) return;
@@ -122,24 +103,7 @@ export async function acceptFriendRequest(userId: string) {
   }
   revalidatePath("/channels/friends/pending", "page");
 }
-export async function getAllFriends() {
-  const session = await getCurrentUser();
-  if (!session?.user) return [];
 
-  try {
-    const { rows } = await sql`
-    SELECT users.id,username,email,image FROM users 
-    JOIN user_relationships on users.id = user_id2 WHERE user_id1=${session.user.id} AND status = 'friend'
-    UNION
-    SELECT users.id,username,email,image FROM users 
-    JOIN user_relationships on users.id = user_id1 WHERE user_id2=${session.user.id} AND status = 'friend';`;
-
-    return rows as Array<User & { request_direction: "Outgoing" | "Incoming" }>;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-}
 export async function deleteFriend(userId: string) {
   const session = await getCurrentUser();
   if (!session?.user) return;
@@ -173,21 +137,6 @@ export async function blockUser(userId: string, path: string) {
 
   revalidatePath(path, "page");
 }
-export async function getBlockUsers() {
-  const session = await getCurrentUser();
-  if (!session?.user) return [];
-
-  try {
-    const { rows } = await sql`
-    SELECT users.id,username,email,image FROM users 
-    JOIN user_relationships on users.id = user_id2 WHERE user_id1=${session.user.id} AND status = 'blocked'`;
-
-    return rows as Array<User>;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-}
 export async function deleteRelationship(userId: string) {
   const session = await getCurrentUser();
   if (!session?.user) return;
@@ -198,4 +147,34 @@ export async function deleteRelationship(userId: string) {
     console.log(error);
   }
   revalidatePath("/channels/friends/blocked", "page");
+}
+
+export async function getAllRelationships() {
+  const session = await getCurrentUser();
+  if (!session?.user) return [];
+
+  try {
+    const { rows } =
+      await sql`SELECT users.id ,username ,email ,image ,status, 'Outgoing' as request_direction FROM users 
+    JOIN user_relationships on users.id = user_id2 WHERE user_id1=${session.user.id}
+    UNION
+    SELECT users.id ,username ,email ,image ,status ,'Incoming' as request_direction FROM users 
+    JOIN user_relationships on users.id = user_id1 WHERE user_id2=${session.user.id};`;
+
+    return rows.map((row) => {
+      return {
+        user: {
+          id: row.id as string,
+          username: row.username as string,
+          email: row.email as string,
+          image: row.image as string,
+        },
+        status: row.status as "friend" | "pending" | "blocked",
+        request_direction:
+          row.status == "pending" ? (row.request_direction as "Incoming" | "Outgoing") : null,
+      };
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }

@@ -11,7 +11,7 @@ async function Navbar({ serverId, user }: { serverId: string; user: User }) {
       <NavbarButton
         key={"ket1"}
         label="Direct Messages"
-        href="/channels/direct-messages"
+        href="/channels/me"
         isActive={serverId === "direct-messages"}
       >
         <Image src="/logos/icon_clyde_white.svg" alt="discord logo" width={30} height={30} />

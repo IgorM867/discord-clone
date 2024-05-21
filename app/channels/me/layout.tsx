@@ -25,7 +25,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
           <ul className="p-2">
             <Link
               className="block group p-3 hover:bg-d-gray-250 rounded-md cursor-pointer"
-              href={"/channels/friends/online"}
+              href={"/channels/me"}
             >
               <SvgWavingFriendIcon
                 className="fill-d-gray-150 inline-block mr-2 group-hover:fill-d-gray-100"

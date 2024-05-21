@@ -1,9 +1,9 @@
 import { WumpusNoFriends } from "./WumpusNoFriends";
 import { WumpusNoBlockedFriends } from "./WumpusNoBlockedFriends";
-import { WumpusNoOnlineFriends } from "../online/components/WumpusNoOnlineFriends";
-import { FriendViewState } from "../page";
+import { WumpusNoOnlineFriends } from "./WumpusNoOnlineFriends";
+import { WumpusNoPendingFriends } from "./WumpusNoPendingFriends";
+import { FriendsViewState } from "./FriendsDashboard";
 import { PendingFriendsListItem } from "./PendingFriendsListItem";
-import { WumpusNoPendingFriends } from "../pending/components/WumpusNoPendingFriends";
 import { AllFriendsListItem } from "./AllFriendsListItem";
 import { AddFriendButton } from "./AddFriendButton";
 import { BlockedFriendsListItem } from "./BlockedFriendsListItem";
@@ -11,9 +11,11 @@ import { BlockedFriendsListItem } from "./BlockedFriendsListItem";
 function FriendsList({
   users,
   friendsViewState,
+  changeViewState,
 }: {
   users: Array<User>;
-  friendsViewState: FriendViewState;
+  friendsViewState: FriendsViewState;
+  changeViewState: (state: FriendsViewState) => void;
 }) {
   if (users.length == 0) {
     switch (friendsViewState) {
@@ -27,7 +29,11 @@ function FriendsList({
         return (
           <>
             <WumpusNoFriends />
-            <AddFriendButton isActive={false} variant={"purple"} />
+            <AddFriendButton
+              isActive={false}
+              variant={"purple"}
+              onClick={() => changeViewState("addfriends")}
+            />
           </>
         );
     }

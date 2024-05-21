@@ -86,5 +86,5 @@ export async function deleteServer(serverId: string) {
     console.log(error);
   }
   revalidatePath("/channels/[channelid]", "page");
-  redirect(`/channels/direct-messages`);
+  redirect(`/channels/me`);
 }

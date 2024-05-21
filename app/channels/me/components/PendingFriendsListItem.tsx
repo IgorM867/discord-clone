@@ -1,5 +1,5 @@
-import { AcceptPendingFriendButton } from "../pending/components/AcceptNewFriendButton";
-import { DeletePendingFriendButton } from "../pending/components/DeletePendingFriendButton";
+import { AcceptPendingFriendButton } from "./AcceptNewFriendButton";
+import { DeletePendingFriendButton } from "./DeletePendingFriendButton";
 import Image from "next/image";
 
 function PendingFriendsListItem({
