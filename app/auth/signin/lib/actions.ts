@@ -1,4 +1,5 @@
 import { signIn } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export async function authenticate(
   prevState: {
@@ -35,12 +36,15 @@ export async function logIn(
     password: formData.get("password"),
   };
 
-  const result = await signIn("sign-in", { ...data, callbackUrl: "/" });
+  const result = await signIn("sign-in", { ...data, redirect: false });
 
   if (result?.error) {
     return {
       error: result.error,
     };
+  }
+  if (result?.ok) {
+    redirect("/");
   }
   return {
     error: "",

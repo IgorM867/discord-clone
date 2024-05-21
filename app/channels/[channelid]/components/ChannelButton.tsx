@@ -17,7 +17,7 @@ function ChannelButton({
   contextMenuOptions,
   firstChannelId,
 }: ChannelButtonProps) {
-  const { ref, contextMenu, handleContextMenu, resetMenu } = useContextMenu();
+  const { ref, contextMenu, handleContextMenu, resetMenu } = useContextMenu<HTMLDivElement>();
 
   const newContextMenuOptions = [
     ...contextMenuOptions,

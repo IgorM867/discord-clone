@@ -6,7 +6,7 @@ const initialContextMenu = {
   y: 0,
 };
 
-export function useContextMenu() {
+export function useContextMenu<T>() {
   const [contextMenu, setContextMenu] = useState(initialContextMenu);
   const ref = useRef<HTMLMenuElement>(null);
 
@@ -30,7 +30,7 @@ export function useContextMenu() {
     };
   }, [ref]);
 
-  const handleContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleContextMenu = (e: React.MouseEvent<T, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
     const { pageX, pageY } = e;

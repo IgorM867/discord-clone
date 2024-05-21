@@ -3,35 +3,44 @@ import Image from "next/image";
 import { ServerMenu } from "./ServerMenu";
 import { SvgXIcon } from "../../../../components/svgIcons/SvgXIcon";
 import { useState } from "react";
+import { SidebarHeader } from "@/components/SidebarHeader";
 
-type SidebarHeaderProps = {
+type ChannelSidebarHeaderProps = {
   serverName: string;
   isAdmin: boolean;
   serverId: string;
   showForm: () => void;
 };
 
-function SidebarHeader({ serverName, isAdmin, serverId, showForm }: SidebarHeaderProps) {
+function ChannelSidebarHeader({
+  serverName,
+  isAdmin,
+  serverId,
+  showForm,
+}: ChannelSidebarHeaderProps) {
   const [isMenuActive, setisMenuActive] = useState(false);
 
   const closeMenu = () => {
     setisMenuActive(false);
   };
   return (
-    <header
-      className="text-d-gray-100 font-medium p-3 px-4 pr-5 shadow-md hover:bg-d-gray-300 cursor-pointer flex relative items-center"
-      onClick={() => setisMenuActive(!isMenuActive)}
-    >
+    <SidebarHeader onClick={() => setisMenuActive(!isMenuActive)} hoverOn>
       <h2 className="overflow-ellipsis overflow-hidden whitespace-nowrap w-full">{serverName}</h2>
       {isMenuActive ? (
         <>
-          <SvgXIcon width={12} height={12} className="fill-white" />
+          <SvgXIcon width={12} height={12} className="fill-white mr-1" />
           <ServerMenu isAdmin={isAdmin} close={closeMenu} serverId={serverId} showForm={showForm} />
         </>
       ) : (
-        <Image src="/icons/angle-down.svg" alt="andle down icon" width={12} height={12} />
+        <Image
+          src="/icons/angle-down.svg"
+          alt="andle down icon"
+          width={12}
+          height={12}
+          className="mr-1"
+        />
       )}
-    </header>
+    </SidebarHeader>
   );
 }
-export { SidebarHeader };
+export { ChannelSidebarHeader };

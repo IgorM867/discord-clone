@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         "d-gray": {
           100: "#EBEBEB",
+          125: "#949ba4",
           150: "#73767d",
           200: "#41434a",
           250: "#383A40",
@@ -26,6 +27,7 @@ const config: Config = {
         "d-white": "#FFFFFF",
         "d-green": "#2E8B57",
         "d-red": "#ED4245",
+        "d-blue": "#00A8FC",
       },
     },
   },

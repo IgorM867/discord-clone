@@ -1,13 +1,13 @@
 "use client";
-import { SignOutButton } from "@/components/SignOutButton";
-import { SidebarHeader } from "./SidebarHeader";
+import { ChannelSidebarHeader } from "./ChannelSidebarHeader";
 import { ChannelsList } from "./ChannelsList";
 import { ContextMenu } from "./ContextMenu";
 import { NewChannelForm } from "./NewChannelForm";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { useState } from "react";
+import { Sidebar } from "@/components/Sidebar";
 
-type SideBarProps = {
+type ChannelSidebarProps = {
   serverName: string;
   userId: string;
   serverId: string;
@@ -16,7 +16,13 @@ type SideBarProps = {
   channelId: string;
 };
 
-function SideBar({ serverName, serverId, isAdmin, channels, channelId }: SideBarProps) {
+function ChannelSidebar({
+  serverName,
+  serverId,
+  isAdmin,
+  channels,
+  channelId,
+}: ChannelSidebarProps) {
   const [isFormActive, setIsFormActive] = useState(false);
   const { ref, contextMenu, handleContextMenu, resetMenu } = useContextMenu();
 
@@ -39,11 +45,8 @@ function SideBar({ serverName, serverId, isAdmin, channels, channelId }: SideBar
 
   return (
     <>
-      <div
-        className="bg-d-gray-450 w-60 min-w-60 flex flex-col justify-between"
-        onContextMenu={handleContextMenu}
-      >
-        <SidebarHeader
+      <Sidebar onContextMenu={handleContextMenu}>
+        <ChannelSidebarHeader
           serverName={serverName}
           isAdmin={isAdmin}
           serverId={serverId}
@@ -56,10 +59,7 @@ function SideBar({ serverName, serverId, isAdmin, channels, channelId }: SideBar
           activeChannel={channelId}
           contextMenuOptions={contextMenuOptions}
         />
-        <div className="bg-d-gray-500 flex justify-end p-2">
-          <SignOutButton />
-        </div>
-      </div>
+      </Sidebar>
       <ContextMenu
         ref={ref}
         options={contextMenuOptions}
@@ -78,4 +78,4 @@ function SideBar({ serverName, serverId, isAdmin, channels, channelId }: SideBar
     </>
   );
 }
-export { SideBar };
+export { ChannelSidebar };
