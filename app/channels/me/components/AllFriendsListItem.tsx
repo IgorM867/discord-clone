@@ -1,9 +1,9 @@
 "use client";
-import Image from "next/image";
 import { MoreOptionsButton } from "./MoreOptionsButton";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { ContextMenu } from "@/app/channels/[channelid]/components/ContextMenu";
 import { blockUser, deleteFriend } from "@/lib/actions/userActions";
+import { UserAvatar } from "./UserAvatar";
 
 function AllFriendsListItem({ user }: { user: User }) {
   const { ref, contextMenu, handleContextMenu, resetMenu } = useContextMenu<HTMLLIElement>();
@@ -18,7 +18,7 @@ function AllFriendsListItem({ user }: { user: User }) {
     {
       name: "Block",
       event: () => {
-        blockUser(user.id, "/channels/friends/all");
+        blockUser(user.id);
       },
     },
   ];
@@ -30,12 +30,10 @@ function AllFriendsListItem({ user }: { user: User }) {
         onContextMenu={handleContextMenu}
       >
         <div className="flex items-center gap-3 ">
-          <div className="size-8 bg-d-red rounded-full grid place-items-center p-1 cursor-pointer">
-            <Image src="/logos/icon_clyde_white.svg" alt="avatar" width={20} height={20} />
-          </div>
+          <UserAvatar isOnline={user.status === "Online"} />
           <div>
             <p className="text-d-white font-medium">{user.username}</p>
-            <p className="text-d-gray-125 text-xs">Offline</p>
+            <p className="text-d-gray-125 text-xs">{user.status}</p>
           </div>
         </div>
         <div className="flex gap-2">

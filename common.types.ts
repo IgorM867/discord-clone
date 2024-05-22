@@ -3,6 +3,7 @@ interface User {
   username: string;
   email: string;
   image: string | null;
+  status: "Online" | "Offline";
   password?: string | null;
 }
 interface Server {

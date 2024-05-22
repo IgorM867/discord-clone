@@ -5,7 +5,16 @@ import { getServerSession } from "next-auth";
 import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 
 export async function getCurrentUser() {
-  return await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
+  if (session?.user) {
+    try {
+      await sql`UPDATE users SET last_activity = now() WHERE id = ${session.user.id}`;
+    } catch (error) {
+      console.log("Could not update user last_activity", error);
+    }
+  }
+
+  return session;
 }
 
 export async function getUserByEmail(email: string) {
@@ -89,7 +98,7 @@ export async function deletePendingFriend(userId: string) {
   } catch (error) {
     console.log(error);
   }
-  revalidatePath("/channels/friends/pending", "page");
+  revalidatePath("/channels/me", "page");
 }
 
 export async function acceptFriendRequest(userId: string) {
@@ -101,7 +110,7 @@ export async function acceptFriendRequest(userId: string) {
   } catch (error) {
     console.log(error);
   }
-  revalidatePath("/channels/friends/pending", "page");
+  revalidatePath("/channels/me", "page");
 }
 
 export async function deleteFriend(userId: string) {
@@ -113,9 +122,9 @@ export async function deleteFriend(userId: string) {
   } catch (error) {
     console.log(error);
   }
-  revalidatePath("/channels/friends/all", "page");
+  revalidatePath("/channels/me", "page");
 }
-export async function blockUser(userId: string, path: string) {
+export async function blockUser(userId: string) {
   const session = await getCurrentUser();
   if (!session?.user) return;
   try {
@@ -135,7 +144,7 @@ export async function blockUser(userId: string, path: string) {
     console.log(error);
   }
 
-  revalidatePath(path, "page");
+  revalidatePath("/channels/me", "page");
 }
 export async function deleteRelationship(userId: string) {
   const session = await getCurrentUser();
@@ -146,7 +155,7 @@ export async function deleteRelationship(userId: string) {
   } catch (error) {
     console.log(error);
   }
-  revalidatePath("/channels/friends/blocked", "page");
+  revalidatePath("/channels/me", "page");
 }
 
 export async function getAllRelationships() {
@@ -155,10 +164,14 @@ export async function getAllRelationships() {
 
   try {
     const { rows } =
-      await sql`SELECT users.id ,username ,email ,image ,status, 'Outgoing' as request_direction FROM users 
+      await sql`SELECT users.id ,username ,email ,image ,status, 'Outgoing' as request_direction, 
+    CASE WHEN last_activity + interval '5 minute' >= now() THEN 'Online' ELSE 'Offline' END as user_status
+    FROM users 
     JOIN user_relationships on users.id = user_id2 WHERE user_id1=${session.user.id}
     UNION
-    SELECT users.id ,username ,email ,image ,status ,'Incoming' as request_direction FROM users 
+    SELECT users.id ,username ,email ,image ,status ,'Incoming' as request_direction, 
+    CASE WHEN last_activity + interval '5 minute' >= now() THEN 'Online' ELSE 'Offline' END as user_status
+    FROM users 
     JOIN user_relationships on users.id = user_id1 WHERE user_id2=${session.user.id};`;
 
     return rows.map((row) => {
@@ -168,6 +181,7 @@ export async function getAllRelationships() {
           username: row.username as string,
           email: row.email as string,
           image: row.image as string,
+          status: row.user_status as "Online" | "Offline",
         },
         status: row.status as "friend" | "pending" | "blocked",
         request_direction:

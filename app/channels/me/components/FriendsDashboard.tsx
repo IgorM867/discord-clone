@@ -23,7 +23,10 @@ function FriendsDashboard({ userRelationships }: FriendsPageProps) {
   const filteredRelationships = userRelationships.filter(
     (relation) =>
       relation.status == friendsViewState ||
-      (friendsViewState == "all" && relation.status == "friend")
+      (friendsViewState == "all" && relation.status == "friend") ||
+      (friendsViewState == "online" &&
+        relation.status == "friend" &&
+        relation.user.status === "Online")
   );
 
   const filteredUsers = filteredRelationships

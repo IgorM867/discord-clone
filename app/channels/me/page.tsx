@@ -6,7 +6,6 @@ async function FriendsPage() {
   if (!userRelationships) {
     return;
   }
-
   return <FriendsDashboard userRelationships={userRelationships} />;
 }
 
