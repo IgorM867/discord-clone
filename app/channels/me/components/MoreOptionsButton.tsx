@@ -23,7 +23,7 @@ function MoreOptionsButton({ userId }: { userId: string }) {
       <SvgEllipsisVerticalIcon
         width={20}
         height={20}
-        className="fill-d-white group-hover/button:fill-d-red"
+        className="fill-d-gray-125 group-hover/button:fill-d-white"
       />
       {isMenuActive && (
         <Menu

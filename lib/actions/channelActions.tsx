@@ -3,6 +3,7 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getServer } from "./serverActions";
+import { getCurrentUser } from "./userActions";
 
 export async function createChannel(
   prevState: {
@@ -71,4 +72,43 @@ export async function deleteChannel(
       const server = await getServer(serverId);
       redirect(`/channels/${server?.null_channel_id}`);
     }
+}
+export async function createDirectChat(userId: string) {
+  const session = await getCurrentUser();
+  if (!session?.user) return;
+
+  let result = null;
+  try {
+    result =
+      await sql`SELECT * FROM direct_chats WHERE (user_id1 = ${userId} AND user_id2 = ${session.user.id}) OR (user_id1 = ${session.user.id} AND user_id2 = ${userId})`;
+    if (result.rows.length == 0) {
+      result =
+        await sql`INSERT INTO direct_chats (user_id1,user_id2) VALUES (${session.user.id},${userId}) returning id;`;
+    }
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+  redirect(`/channels/me/${result.rows[0].id}`);
+}
+export async function getDirectChatUser(chatId: string) {
+  const session = await getCurrentUser();
+  if (!session?.user) return;
+
+  try {
+    const { rows } = await sql`SELECT users.id, username, email, image,
+    CASE WHEN last_activity + interval '5 minute' >= now() THEN 'Online' ELSE 'Offline' END as status
+    FROM users 
+    JOIN direct_chats on users.id = user_id2 WHERE direct_chats.id = ${chatId} AND user_id1 = ${session.user.id}
+    UNION
+    SELECT users.id, username, email, image, 
+    CASE WHEN last_activity + interval '5 minute' >= now() THEN 'Online' ELSE 'Offline' END as status
+    FROM users 
+    JOIN direct_chats on users.id = user_id1 WHERE direct_chats.id = ${chatId} AND user_id2 = ${session.user.id};`;
+
+    return rows[0] as User;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }

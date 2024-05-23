@@ -1,7 +1,7 @@
 "use client";
 import { ChannelSidebarHeader } from "./ChannelSidebarHeader";
 import { ChannelsList } from "./ChannelsList";
-import { ContextMenu } from "./ContextMenu";
+import { ContextMenu } from "@/components/ContextMenu";
 import { NewChannelForm } from "./NewChannelForm";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { useState } from "react";

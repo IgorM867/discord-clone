@@ -2,11 +2,11 @@
 import { useRef } from "react";
 
 type MessageFormProps = {
-  channelName: string;
+  placeholder: string;
   handleFormSubmit: (formData: FormData) => Promise<void>;
 };
 
-function MessageForm({ channelName, handleFormSubmit }: MessageFormProps) {
+function MessageForm({ placeholder, handleFormSubmit }: MessageFormProps) {
   const ref = useRef<HTMLFormElement>(null);
 
   return (
@@ -21,7 +21,7 @@ function MessageForm({ channelName, handleFormSubmit }: MessageFormProps) {
       <input
         name="message"
         className="bg-d-gray-250 w-full rounded-md p-2 px-5 outline-none text-d-gray-100 text-base placeholder:text-d-gray-150"
-        placeholder={`Message #${channelName}`}
+        placeholder={`Message ${placeholder}`}
         autoComplete="off"
         type="text"
       />

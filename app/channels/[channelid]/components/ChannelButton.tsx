@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SvghashtagIcon } from "@/components/svgIcons/SvgHashtagIcon";
-import { ContextMenu } from "./ContextMenu";
+import { ContextMenu } from "@/components/ContextMenu";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { deleteChannel } from "@/lib/actions/channelActions";
 

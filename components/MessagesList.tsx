@@ -5,18 +5,22 @@ import { MessagesDivider } from "./MessagesDivider";
 import { getMessages } from "@/lib/actions";
 
 type MessagesListProps = {
-  channel: Channel;
+  chatId: string;
+  chatType: "server_chat" | "direct_chat";
+  chatName: string;
 };
 
-async function MessagesList({ channel }: MessagesListProps) {
-  const messages = await getMessages(channel.id);
+async function MessagesList({ chatId, chatType, chatName }: MessagesListProps) {
+  const messages = await getMessages(chatId, chatType);
 
   let lastDate: Date | null = null;
   let lastUserId: string | null = null;
 
+  const message = chatType === "server_chat" ? `#${chatName}` : chatName;
+
   return (
     <ol className="overflow-y-scroll  h-[calc(100%_-_64px)] flex flex-col scrollbar ">
-      <ChannelWelcomeMessage channelName={channel.name} />
+      <ChannelWelcomeMessage message={message} chatType={chatType} />
       {messages.map((message) => {
         const isNewDay = checkIsNewDay(lastDate, message.created_at);
         const isNewUser = lastUserId !== message.creator_id;
@@ -51,7 +55,7 @@ function getDate(date: Date) {
     "December",
   ];
   const day = date.getDate();
-  const month = months[date.getMonth() - 1];
+  const month = months[date.getMonth()];
   const year = date.getFullYear();
 
   return `${day} ${month} ${year}`;

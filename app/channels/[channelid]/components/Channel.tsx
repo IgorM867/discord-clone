@@ -1,6 +1,6 @@
 import { Error } from "@/components/Error";
 import { SvghashtagIcon } from "@/components/svgIcons/SvgHashtagIcon";
-import { Chat } from "./Chat";
+import { Chat } from "@/components/Chat";
 import { getChannel } from "@/lib/actions/channelActions";
 
 async function Channel({ channelId }: { channelId: string }) {
@@ -14,7 +14,7 @@ async function Channel({ channelId }: { channelId: string }) {
         <SvghashtagIcon width={22} height={22} className="fill-d-gray-150 inline align-middle" />{" "}
         {channel.name}
       </header>
-      <Chat channel={channel} />
+      <Chat chatInfo={{ channel, type: "server_chat" }} />
     </div>
   );
 }
