@@ -5,13 +5,20 @@ import { SvgWavingFriendIcon } from "@/components/svgIcons/SvgWavingFriendIcon";
 import { getCurrentUser } from "@/lib/actions/userActions";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { DirectsChatsList } from "../components/DirectsChatsList";
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
+type LayoutProps = {
+  children: React.ReactNode;
+  params: { direct_chat_id: string };
+};
+
+export default async function Layout({ children, params }: LayoutProps) {
   const session = await getCurrentUser();
 
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/");
   }
+
   return (
     <main className="bg-d-gray-400 h-screen flex">
       <Navbar serverId={"direct-messages"} user={session.user} />
@@ -34,6 +41,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
               />
               <span className="text-d-gray-125 group-hover:text-d-gray-100">Friends</span>
             </Link>
+            <li className="text-d-gray-125 text-xs p-3 font-medium hover:text-d-white cursor-default">
+              DIRECT MESSAGES
+            </li>
+            <DirectsChatsList userId={session.user.id} activeChatId={params.direct_chat_id} />
           </ul>
         </nav>
       </Sidebar>

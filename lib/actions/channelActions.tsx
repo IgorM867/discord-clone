@@ -112,3 +112,34 @@ export async function getDirectChatUser(chatId: string) {
     return null;
   }
 }
+export async function getDirectChats(userId: string) {
+  try {
+    const { rows } = await sql`SELECT users.id, username, email, image,
+    CASE WHEN last_activity + interval '5 minute' >= now() THEN 'Online' ELSE 'Offline' END as status,
+    direct_chats.id as direct_chats_id
+    FROM users 
+    JOIN direct_chats on users.id = user_id2 WHERE user_id1 = ${userId}
+    UNION
+    SELECT users.id, username, email, image, 
+    CASE WHEN last_activity + interval '5 minute' >= now() THEN 'Online' ELSE 'Offline' END as status,
+    direct_chats.id as direct_chats_id
+    FROM users 
+    JOIN direct_chats on users.id = user_id1 WHERE user_id2 = ${userId};`;
+
+    return rows.map((row) => {
+      return {
+        user: {
+          id: row.id,
+          username: row.username,
+          email: row.email,
+          image: row.image,
+          status: row.status,
+        },
+        chatId: row.direct_chats_id,
+      };
+    }) as Array<{ user: User; chatId: string }>;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
