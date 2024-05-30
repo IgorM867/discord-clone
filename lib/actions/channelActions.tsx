@@ -2,7 +2,6 @@
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { getServer } from "./serverActions";
 import { getCurrentUser } from "./userActions";
 
 export async function createChannel(
@@ -19,13 +18,13 @@ export async function createChannel(
   let result = null;
   try {
     result =
-      await sql`INSERT INTO channels (id,name,server_id) VALUES (nextval('channels_sequence'),${channelName},${serverId}) returning id`;
+      await sql`INSERT INTO channels (name,server_id) VALUES (${channelName},${serverId}) returning id`;
   } catch (error) {
-    console.log(error);
+    console.log("Error during channel creation", error);
     return { error: "Database error" };
   }
-  revalidatePath("/channels/[channelid]", "page");
-  redirect(`/channels/${result.rows[0].id}`);
+  revalidatePath(`/channels/${serverId}`, "page");
+  redirect(`/channels/${serverId}/${result.rows[0].id}`);
 }
 
 export async function getChannels(serverId: string) {
@@ -60,17 +59,16 @@ export async function deleteChannel(
   let serverId;
   try {
     const result = await sql`DELETE FROM channels where id=${channelId} returning server_id;`;
-    serverId = result.rows[0].serverid;
+    serverId = result.rows[0].server_id;
   } catch (error) {
     console.log(error);
   }
-  revalidatePath("/channels/[channelid]", "page");
+  revalidatePath(`/channels/${serverId}`, "page");
   if (isActive)
     if (firstChannelId) {
-      redirect(`/channels/${firstChannelId}`);
+      redirect(`/channels/${serverId}/${firstChannelId}`);
     } else {
-      const server = await getServer(serverId);
-      redirect(`/channels/${server?.null_channel_id}`);
+      redirect(`/channels/${serverId}`);
     }
 }
 export async function createDirectChat(userId: string, withRedirect: boolean = true) {

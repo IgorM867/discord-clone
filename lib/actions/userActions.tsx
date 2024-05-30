@@ -81,7 +81,7 @@ export async function sendFriendRequest(prevState: RequestState | null, formData
   try {
     await sql`INSERT INTO user_relationships (user_id1,user_id2,status) VALUES (${session.user.id},${user.id},'pending');`;
 
-    revalidatePath("/channels/friends/pending", "page");
+    revalidatePath("/channels/me", "page");
     return { success: true, message: `Sucess! Your friend request to ${username} was sent.` };
   } catch (error) {
     console.log(error);

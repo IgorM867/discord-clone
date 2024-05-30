@@ -20,7 +20,7 @@ export async function sendMessage(
     } catch (error) {
       console.log(error);
     }
-    revalidatePath(`/channels/${chatId}`, "page");
+    revalidatePath(`/channels/[serverId]/${chatId}`, "page");
   } else {
     try {
       await sql`INSERT INTO direct_messages (creator_id, Content, chat_id) VALUES (${session.user.id},${content},${chatId});`;

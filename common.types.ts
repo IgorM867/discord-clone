@@ -9,7 +9,6 @@ interface User {
 interface Server {
   id: string;
   name: string;
-  null_channel_id: string;
 }
 interface Channel {
   id: string;

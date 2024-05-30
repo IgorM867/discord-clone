@@ -22,45 +22,36 @@ export async function createServer(
   let result = null;
   try {
     result = await sql`WITH server AS (
-          INSERT INTO servers (name,null_channel_id) VALUES (${servername},nextval('channels_sequence')) RETURNING id
+          INSERT INTO servers (name) VALUES (${servername}) RETURNING id
       ), server_user AS (
           INSERT INTO server_users (user_id, server_id, role)
           VALUES (${user.id}, (SELECT id FROM server), 'OWNER')
       )
-      INSERT INTO channels (id,name,server_id) VALUES(nextval('channels_sequence'),'general',(SELECT id FROM server)) RETURNING id;`;
+      INSERT INTO channels (name,server_id) VALUES('general',(SELECT id FROM server)) RETURNING (SELECT id FROM server), id as channel_id;`;
   } catch (error) {
     console.log(error);
     return { error: "Database error" };
   }
-  revalidatePath("/channels/[channelid]", "page");
-  redirect(`/channels/${result.rows[0].id}`);
+  revalidatePath("/channels/[serverId]", "page");
+  redirect(`/channels/${result.rows[0].id}/${result.rows[0].channel_id}`);
 }
 
 export async function getServers(userId: string) {
-  const results =
-    await sql`SELECT DISTINCT ON (servers.id) servers.id AS id, servers.name, channels.id AS channel_id, servers.null_channel_id FROM servers
-      JOIN server_users on server_users.server_id = servers.id
-      LEFT JOIN channels on channels.server_id = servers.id
-      WHERE server_users.user_id = ${userId};`;
-
-  return results.rows as Array<Server & { channel_id: string }>;
+  try {
+    const results =
+      await sql`SELECT DISTINCT ON (servers.id) servers.id AS id, servers.name FROM servers
+        JOIN server_users on server_users.server_id = servers.id
+        WHERE server_users.user_id = ${userId};`;
+    return results.rows as Server[];
+  } catch (error) {
+    console.log("Error during getting servers", error);
+    return [];
+  }
 }
 
 export async function getServer(serverId: string) {
   try {
     const result = await sql`SELECT * FROM servers where id=${serverId};`;
-    return result.rows[0] as Server;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-}
-
-export async function getServerByChannel(channelId: string) {
-  try {
-    const result =
-      await sql`SELECT servers.id, servers.name, servers.null_channel_id FROM servers LEFT JOIN channels on servers.id = channels.server_id 
-        WHERE channels.id=${channelId} OR servers.null_channel_id=${channelId};`;
     return result.rows[0] as Server;
   } catch (error) {
     console.log(error);
@@ -87,7 +78,7 @@ export async function deleteServer(serverId: string) {
   } catch (error) {
     console.log(error);
   }
-  revalidatePath("/channels/[channelid]", "page");
+  revalidatePath("/channels/[serverId]", "page");
   redirect(`/channels/me`);
 }
 export async function getInviteCode(serverId: string) {

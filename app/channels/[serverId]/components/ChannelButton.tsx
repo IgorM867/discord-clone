@@ -4,6 +4,7 @@ import { SvghashtagIcon } from "@/components/svgIcons/SvgHashtagIcon";
 import { ContextMenu, ContextMenuOption } from "@/components/ContextMenu";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { deleteChannel } from "@/lib/actions/channelActions";
+import { useParams } from "next/navigation";
 
 type ChannelButtonProps = {
   channel: Channel;
@@ -19,6 +20,7 @@ function ChannelButton({
   firstChannelId,
 }: ChannelButtonProps) {
   const { ref, contextMenu, handleContextMenu, resetMenu } = useContextMenu<HTMLDivElement>();
+  const params = useParams();
 
   const newContextMenuOptions: ContextMenuOption[] = [
     ...contextMenuOptions,
@@ -35,7 +37,7 @@ function ChannelButton({
     <>
       <div onContextMenu={handleContextMenu}>
         <Link
-          href={`/channels/${channel.id}`}
+          href={`/channels/${params.serverId}/${channel.id}`}
           key={channel.id}
           className={`flex items-center text-base gap-2 hover:bg-d-gray-350 p-1 pl-2 rounded-md cursor-pointer ${
             isActive && "text-d-white"

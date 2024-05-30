@@ -3,7 +3,12 @@ import { NavbarButton } from "./NavbarButton";
 import { NewServerButton } from "./NewServerButton";
 import { getServers } from "@/lib/actions/serverActions";
 
-async function Navbar({ serverId, user }: { serverId: string; user: User }) {
+type NavbarProps = {
+  serverId: string;
+  user: User;
+};
+
+async function Navbar({ serverId, user }: NavbarProps) {
   const servers = await getServers(user.id);
 
   return (
@@ -21,7 +26,7 @@ async function Navbar({ serverId, user }: { serverId: string; user: User }) {
         <NavbarButton
           key={server.id}
           label={server.name}
-          href={`/channels/${server.channel_id || server.null_channel_id}`}
+          href={`/channels/${server.id}`}
           isActive={serverId === server.id}
         >
           {server.name

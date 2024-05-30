@@ -1,10 +1,10 @@
 import { SvgCircleArrowLeftIcon } from "@/components/svgIcons/SvgCircleArrowLeftIcon";
 import { SvgCirclePlusIcon } from "@/components/svgIcons/SvgCirclePlusIcon";
-import { SvgTrashIcon } from "@/components/svgIcons/SvgTrashIcon";
 import { SvgUserPlusIcon } from "@/components/svgIcons/SvgUserPlusIcon";
-import { ServerMenuButton } from "./ServerMenuButton";
-import { useOnClickOutside } from "@/hooks/useOnClickOutside";
+import { SvgTrashIcon } from "@/components/svgIcons/SvgTrashIcon";
 import { deleteServer } from "@/lib/actions/serverActions";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
+import { ServerMenuButton } from "./ServerMenuButton";
 
 type ServerMenuProps = {
   isAdmin: boolean;
