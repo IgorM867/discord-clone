@@ -73,7 +73,7 @@ export async function deleteChannel(
       redirect(`/channels/${server?.null_channel_id}`);
     }
 }
-export async function createDirectChat(userId: string) {
+export async function createDirectChat(userId: string, withRedirect: boolean = true) {
   const session = await getCurrentUser();
   if (!session?.user) return;
 
@@ -89,7 +89,23 @@ export async function createDirectChat(userId: string) {
     console.log(error);
     return;
   }
-  redirect(`/channels/me/${result.rows[0].id}`);
+  if (withRedirect) {
+    redirect(`/channels/me/${result.rows[0].id}`);
+  }
+}
+export async function getDirectChat(userId1: string, userId2: string) {
+  try {
+    const { rows } =
+      await sql`SELECT * FROM direct_chats WHERE (user_id1 = ${userId1} AND user_id2 = ${userId2}) OR (user_id1 = ${userId2} AND user_id2 = ${userId1});`;
+    if (rows.length > 0) {
+      return rows[0] as DirectChat;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }
 export async function getDirectChatUser(chatId: string) {
   const session = await getCurrentUser();

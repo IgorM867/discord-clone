@@ -192,3 +192,24 @@ export async function getAllRelationships() {
     console.log(error);
   }
 }
+export async function getFriends() {
+  const session = await getCurrentUser();
+  if (!session?.user) return [];
+
+  try {
+    const { rows } = await sql`SELECT users.id, username, email, image,
+    CASE WHEN last_activity + interval '5 minute' >= now() THEN 'Online' ELSE 'Offline' END as user_status
+    FROM users 
+    JOIN user_relationships on users.id = user_id2 WHERE user_id1=${session.user.id} AND status = 'friend'
+    UNION
+    SELECT users.id, username, email, image, 
+    CASE WHEN last_activity + interval '5 minute' >= now() THEN 'Online' ELSE 'Offline' END as user_status
+    FROM users 
+    JOIN user_relationships on users.id = user_id1 WHERE user_id2=${session.user.id} AND status = 'friend';`;
+
+    return rows as User[];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}

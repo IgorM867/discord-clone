@@ -3,6 +3,8 @@ import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "./userActions";
 import { redirect } from "next/navigation";
 import { sql } from "@vercel/postgres";
+import { sendMessage } from "../actions";
+import { createDirectChat, getDirectChat } from "./channelActions";
 
 export async function createServer(
   prevState: {
@@ -87,4 +89,42 @@ export async function deleteServer(serverId: string) {
   }
   revalidatePath("/channels/[channelid]", "page");
   redirect(`/channels/me`);
+}
+export async function getInviteCode(serverId: string) {
+  const session = await getCurrentUser();
+  if (!session?.user) return;
+
+  try {
+    const result =
+      await sql`SELECT * FROM server_invites WHERE inviter_id = ${session.user.id} AND server_id = ${serverId};`;
+    if (result.rows.length > 0) {
+      return result.rows[0].invite_code;
+    } else {
+      const result =
+        await sql`INSERT INTO server_invites (inviter_id,server_id) VALUES (${session.user.id},${serverId}) returning *;`;
+
+      return result.rows[0].invite_code;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+export async function sendInviteLink(userId: string, inviteLink: string) {
+  const session = await getCurrentUser();
+  if (!session?.user) return;
+
+  try {
+    let direct_chat = await getDirectChat(session.user.id, userId);
+
+    if (direct_chat === null) {
+      await createDirectChat(userId, false);
+      direct_chat = await getDirectChat(session.user.id, userId);
+      if (direct_chat === null) return;
+    }
+
+    await sendMessage(inviteLink, direct_chat.id, "direct_chat");
+  } catch (error) {
+    console.log("Failed to send invite link", error);
+  }
 }

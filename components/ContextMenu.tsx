@@ -1,8 +1,20 @@
 import { ForwardedRef, forwardRef } from "react";
 import { ContextMenuButton } from "./ContextMenuButton";
 
+export type ContextMenuOption =
+  | {
+      type: "Link";
+      name: string;
+      path: string;
+    }
+  | {
+      type: "Button";
+      name: string;
+      event: () => void;
+    };
+
 type ContextMenuProps = {
-  options: { name: string; event: () => void }[];
+  options: ContextMenuOption[];
   contextMenu: {
     isActive: boolean;
     x: number;
@@ -10,6 +22,7 @@ type ContextMenuProps = {
   };
   close: () => void;
 };
+
 const ContextMenu = forwardRef(function (
   { options, contextMenu, close }: ContextMenuProps,
   ref: ForwardedRef<HTMLMenuElement>

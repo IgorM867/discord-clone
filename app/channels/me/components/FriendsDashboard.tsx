@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { SearchBar } from "./SearchBar";
+import { SearchBar } from "@/components/SearchBar";
 import { FriendsList } from "./FriendsList";
 import { WumpusNoFindFriends } from "./WumpusNoFindFriends";
 import { FriendsHeader } from "./FriendsHeader";
@@ -54,7 +54,7 @@ function FriendsDashboard({ userRelationships }: FriendsPageProps) {
       <FriendsHeader friendsViewState={friendsViewState} changeViewState={changeViewState} />
       {filteredRelationships.length > 0 && (
         <>
-          <SearchBar searchText={searchText} setSearchText={setSearchText} />
+          <SearchBar searchText={searchText} setSearchText={setSearchText} className="mx-7 my-3" />
           <p className="mx-7 py-3 text-d-gray-125 text-xs font-semibold ">
             {getLabel(friendsViewState)} - {filteredUsers.length}
           </p>

@@ -1,12 +1,30 @@
+import { ContextMenuOption } from "@/components/ContextMenu";
 import { ChannelButton } from "./ChannelButton";
 
 type ChannelsListProps = {
   channels: Channel[];
   activeChannel: string;
-  contextMenuOptions: { name: string; event: () => void }[];
 };
 
-function ChannelsList({ channels, activeChannel, contextMenuOptions }: ChannelsListProps) {
+function ChannelsList({ channels, activeChannel }: ChannelsListProps) {
+  const contextMenuOptions: ContextMenuOption[] = [
+    {
+      type: "Link",
+      name: "Create Channel",
+      path: `${activeChannel}/?newChannelDialog=true`,
+    },
+    {
+      type: "Link",
+      name: "Create Category",
+      path: "",
+    },
+    {
+      type: "Link",
+      name: "Invite People",
+      path: `${activeChannel}/?inviteUsersDialog=true`,
+    },
+  ];
+
   return (
     <div className="text-d-gray-150 p-2 h-full">
       {channels.map((channel, index) => (

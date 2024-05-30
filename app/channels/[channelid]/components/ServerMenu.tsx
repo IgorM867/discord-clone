@@ -10,18 +10,18 @@ type ServerMenuProps = {
   isAdmin: boolean;
   serverId: string;
   close: () => void;
-  showForm: () => void;
 };
 
-function ServerMenu({ isAdmin, serverId, close, showForm }: ServerMenuProps) {
+function ServerMenu({ isAdmin, serverId, close }: ServerMenuProps) {
   const ref = useOnClickOutside<HTMLDivElement>(close);
 
   return (
     <>
       <div ref={ref} className="absolute bg-d-gray-600 top-16 w-52 left-2 rounded-md px-2 py-3">
         <ServerMenuButton
+          type="link"
           value="Invite People"
-          onClick={() => {}}
+          path={`?inviteUsersDialog=true`}
           className="text-d-purple hover:bg-d-purple hover:text-d-white"
         >
           <SvgUserPlusIcon
@@ -33,8 +33,9 @@ function ServerMenu({ isAdmin, serverId, close, showForm }: ServerMenuProps) {
         {isAdmin ? (
           <>
             <ServerMenuButton
+              type="link"
               value="Create Channel"
-              onClick={showForm}
+              path="?newChannelDialog=true"
               className="text-d-gray-150 hover:bg-d-purple hover:text-d-white"
             >
               <SvgCirclePlusIcon
@@ -44,6 +45,7 @@ function ServerMenu({ isAdmin, serverId, close, showForm }: ServerMenuProps) {
               />
             </ServerMenuButton>
             <ServerMenuButton
+              type="button"
               value="Delete Server"
               onClick={async () => await deleteServer(serverId)}
               className="text-d-red hover:bg-d-red hover:text-d-white"
@@ -57,6 +59,7 @@ function ServerMenu({ isAdmin, serverId, close, showForm }: ServerMenuProps) {
           </>
         ) : (
           <ServerMenuButton
+            type="button"
             value="Leave Server"
             onClick={() => {}}
             className="text-d-red hover:bg-d-red hover:text-d-white"

@@ -1,13 +1,14 @@
+"use client";
 import Link from "next/link";
 import { SvghashtagIcon } from "@/components/svgIcons/SvgHashtagIcon";
-import { ContextMenu } from "@/components/ContextMenu";
+import { ContextMenu, ContextMenuOption } from "@/components/ContextMenu";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { deleteChannel } from "@/lib/actions/channelActions";
 
 type ChannelButtonProps = {
   channel: Channel;
   isActive: boolean;
-  contextMenuOptions: { name: string; event: () => void }[];
+  contextMenuOptions: ContextMenuOption[];
   firstChannelId: string | null;
 };
 
@@ -19,9 +20,10 @@ function ChannelButton({
 }: ChannelButtonProps) {
   const { ref, contextMenu, handleContextMenu, resetMenu } = useContextMenu<HTMLDivElement>();
 
-  const newContextMenuOptions = [
+  const newContextMenuOptions: ContextMenuOption[] = [
     ...contextMenuOptions,
     {
+      type: "Button",
       name: "Delete Channel",
       event: () => {
         deleteChannel(channel.id, isActive, firstChannelId);

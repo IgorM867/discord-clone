@@ -1,69 +1,56 @@
+"use client";
 import Image from "next/image";
-import { SvgXIcon } from "@/components/svgIcons/SvgXIcon";
 import { createChannel } from "@/lib/actions/channelActions";
-import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useFormState } from "react-dom";
+import { Modal } from "@/components/Modal";
+import { useRouter } from "next/navigation";
 
 const initialState = {
   error: "",
 };
 
 type NewChannelFormProps = {
-  isOpen: boolean;
   serverId: string;
-  close: () => void;
 };
-function NewChannelForm({ isOpen, serverId, close }: NewChannelFormProps) {
+function NewChannelForm({ serverId }: NewChannelFormProps) {
   const [state, formAction] = useFormState(createChannel, initialState);
-  const ref = useOnClickOutside<HTMLDialogElement>(close);
+  const router = useRouter();
+
+  const closeModal = () => {
+    router.back();
+  };
   return (
-    <>
-      {isOpen && <div className="backdrop"></div>}
-      <dialog
-        ref={ref}
-        open={isOpen}
-        className="fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]  rounded-md max-w-lg z-10 bg-d-gray-400 min-w-[450px] text-d-white overflow-hidden"
-      >
-        <header className="flex justify-between p-5">
-          <h2 className="text-2xl">Create Channel</h2>
-          <SvgXIcon
-            width={28}
-            height={28}
-            className="fill-d-gray-150 hover:fill-d-gray-100 cursor-pointer"
-            onClick={close}
-          />
-        </header>
-        <form className="mt-2" action={formAction}>
-          <input type="hidden" name="serverid" value={serverId} />
-          <div className="p-5">
-            <label className=" text-xs font-bold ">
-              <p className="mb-2">CHANNEL NAME</p>
-              <div className="flex bg-d-gray-550 rounded-sm p-2">
-                <Image src={"/icons/hashtag-solid.svg"} alt="hashtag" width={20} height={20} />
-                <input
-                  className="bg-d-gray-550 w-full p-1 outline-none text-d-gray-100 font-normal text-base"
-                  placeholder="new-channel"
-                  name="channelname"
-                  required
-                />
-              </div>
-            </label>
-            {state && <p className="text-red-500">{`${state.error}`}</p>}
-          </div>
-          <div className="bg-d-gray-450 flex justify-end gap-3 p-5 ">
-            <button onClick={close} className="font-normal text-sm hover:underline">
-              Cancel
-            </button>
-            <button
-              className="bg-d-purple p-2 rounded-sm brightness-125 hover:brightness-100"
-              type="submit"
-            >
-              Create Channel
-            </button>
-          </div>
-        </form>
-      </dialog>
-    </>
+    <Modal headerLabel="Create Channel" searchParam="newChannelDialog">
+      <form className="mt-2" action={formAction}>
+        <input type="hidden" name="serverid" value={serverId} />
+        <div className="p-5">
+          <label className=" text-xs font-bold ">
+            <p className="mb-2">CHANNEL NAME</p>
+            <div className="flex bg-d-gray-550 rounded-sm p-2">
+              <Image src={"/icons/hashtag-solid.svg"} alt="hashtag" width={20} height={20} />
+              <input
+                className="bg-d-gray-550 w-full p-1 outline-none text-d-gray-100 font-normal text-base"
+                placeholder="new-channel"
+                name="channelname"
+                required
+              />
+            </div>
+          </label>
+          {state && <p className="text-red-500">{`${state.error}`}</p>}
+        </div>
+        <div className="bg-d-gray-450 flex justify-end gap-3 p-5 ">
+          <button onClick={closeModal} className="font-normal text-sm hover:underline">
+            Cancel
+          </button>
+          <button
+            className="bg-d-purple p-2 rounded-sm brightness-125 hover:brightness-100"
+            type="submit"
+          >
+            Create Channel
+          </button>
+        </div>
+      </form>
+    </Modal>
   );
 }
 export { NewChannelForm };

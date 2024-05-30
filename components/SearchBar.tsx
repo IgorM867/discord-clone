@@ -6,14 +6,15 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
 type SearchBarProps = {
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
+  className?: string;
 };
-function SearchBar({ searchText, setSearchText }: SearchBarProps) {
+function SearchBar({ searchText, setSearchText, className }: SearchBarProps) {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
   };
 
   return (
-    <div className="flex bg-d-gray-550 mx-7 my-3 p-2 rounded-md">
+    <div className={`${className} flex bg-d-gray-550 p-2 rounded-md`}>
       <input
         className="bg-d-gray-550 flex-grow text-d-gray-100 outline-none"
         placeholder="Search"
@@ -27,7 +28,10 @@ function SearchBar({ searchText, setSearchText }: SearchBarProps) {
           width={20}
           height={20}
           className="fill-d-gray-125 cursor-pointer hover:fill-d-gray-100"
-          onClick={() => setSearchText("")}
+          onClickCapture={(e) => {
+            e.stopPropagation();
+            setSearchText("");
+          }}
         />
       )}
     </div>

@@ -1,80 +1,43 @@
 "use client";
-import { ChannelSidebarHeader } from "./ChannelSidebarHeader";
-import { ChannelsList } from "./ChannelsList";
-import { ContextMenu } from "@/components/ContextMenu";
-import { NewChannelForm } from "./NewChannelForm";
+import { ContextMenu, ContextMenuOption } from "@/components/ContextMenu";
 import { useContextMenu } from "@/hooks/useContextMenu";
-import { useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
+import { ReactNode } from "react";
 
 type ChannelSidebarProps = {
-  serverName: string;
-  userId: string;
-  serverId: string;
-  isAdmin: boolean;
-  channels: Channel[];
-  channelId: string;
+  children: ReactNode;
 };
 
-function ChannelSidebar({
-  serverName,
-  serverId,
-  isAdmin,
-  channels,
-  channelId,
-}: ChannelSidebarProps) {
-  const [isFormActive, setIsFormActive] = useState(false);
+function ChannelSidebar({ children }: ChannelSidebarProps) {
   const { ref, contextMenu, handleContextMenu, resetMenu } = useContextMenu();
 
-  const contextMenuOptions = [
+  const contextMenuOptions: ContextMenuOption[] = [
     {
+      type: "Link",
       name: "Create Channel",
-      event: () => {
-        setIsFormActive(true);
-      },
+      path: `?newChannelDialog=true`,
     },
     {
+      type: "Link",
       name: "Create Category",
-      event: () => {},
+      path: "",
     },
     {
+      type: "Link",
       name: "Invite People",
-      event: () => {},
+      path: `?inviteUsersDialog=true`,
     },
   ];
 
   return (
     <>
-      <Sidebar onContextMenu={handleContextMenu}>
-        <ChannelSidebarHeader
-          serverName={serverName}
-          isAdmin={isAdmin}
-          serverId={serverId}
-          showForm={() => {
-            setIsFormActive(true);
-          }}
-        />
-        <ChannelsList
-          channels={channels}
-          activeChannel={channelId}
-          contextMenuOptions={contextMenuOptions}
-        />
-      </Sidebar>
+      <Sidebar onContextMenu={handleContextMenu}>{children}</Sidebar>
       <ContextMenu
         ref={ref}
         options={contextMenuOptions}
         contextMenu={contextMenu}
         close={resetMenu}
       />
-      {isFormActive && (
-        <NewChannelForm
-          isOpen={isFormActive}
-          serverId={serverId}
-          close={() => {
-            setIsFormActive(false);
-          }}
-        />
-      )}
     </>
   );
 }

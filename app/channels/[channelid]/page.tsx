@@ -1,12 +1,16 @@
 import { Navbar } from "@/components/Navbar";
 import { Error } from "@/components/Error";
-import { NoChannelsPage } from "./components/NoChannelsPage";
 import { Channel } from "./components/Channel";
-import { getServerByChannel, isServerAdmin } from "@/lib/actions/serverActions";
-import { getCurrentUser } from "@/lib/actions/userActions";
-import { getChannels } from "@/lib/actions/channelActions";
-import { redirect } from "next/navigation";
+import { ChannelsList } from "./components/ChannelsList";
 import { ChannelSidebar } from "./components/ChannelSidebar";
+import { NewChannelForm } from "./components/NewChannelForm";
+import { NoChannelsPage } from "./components/NoChannelsPage";
+import { InviteFriendsModal } from "./components/InviteFriendsModal";
+import { ChannelSidebarHeader } from "./components/ChannelSidebarHeader";
+import { getChannels } from "@/lib/actions/channelActions";
+import { getCurrentUser } from "@/lib/actions/userActions";
+import { getServerByChannel, isServerAdmin } from "@/lib/actions/serverActions";
+import { redirect } from "next/navigation";
 
 type ChannelPageProps = {
   params: {
@@ -29,14 +33,12 @@ export default async function ChannelPage({ params: { channelid } }: ChannelPage
   return (
     <main className="bg-d-gray-400 h-screen flex">
       <Navbar serverId={server.id} user={session.user} />
-      <ChannelSidebar
-        serverName={server.name}
-        userId={session.user.id}
-        serverId={server.id}
-        isAdmin={isAdmin}
-        channels={channels}
-        channelId={channelid}
-      />
+      <ChannelSidebar>
+        <ChannelSidebarHeader server={server} isAdmin={isAdmin} />
+        <ChannelsList channels={channels} activeChannel={channelid} />
+        <NewChannelForm serverId={server.id} />
+        <InviteFriendsModal server={server} />
+      </ChannelSidebar>
 
       {channels.length == 0 ? (
         <NoChannelsPage />
