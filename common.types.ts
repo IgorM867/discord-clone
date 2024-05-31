@@ -33,3 +33,11 @@ interface DirectMessage {
   created_at: Date;
   chat_id: string;
 }
+interface ServerInvitation {
+  id: string;
+  invite_code: string;
+  inviter_id: string;
+  server_id: string;
+  uses: number;
+  expires_time: Date;
+}

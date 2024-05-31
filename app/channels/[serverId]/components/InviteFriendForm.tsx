@@ -39,7 +39,7 @@ function InviteFriendForm({ server, friends, inviteCode }: InviteFriendFormProps
         <SearchBar searchText={searchText} setSearchText={setSearchText} className="mt-3" />
       </header>
       <FriendsListToInvite friends={filteredFriends} inviteLink={inviteLink} />
-      <InviteLink inviteLink={inviteCode} />
+      <InviteLink inviteLink={inviteLink} />
     </>
   );
 }

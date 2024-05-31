@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 type pageProps = {
   params: {
     inviteCode: string;
@@ -5,7 +7,7 @@ type pageProps = {
 };
 
 function page({ params }: pageProps) {
-  return <div>{params.inviteCode}</div>;
+  redirect(`/invite/${params.inviteCode}`);
 }
 
 export default page;

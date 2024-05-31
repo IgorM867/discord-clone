@@ -16,7 +16,16 @@ export async function getCurrentUser() {
 
   return session;
 }
-
+export async function getUserById(userId: string) {
+  try {
+    const { rows } = await sql`SELECT * FROM users WHERE id=${userId};`;
+    if (rows.length === 0) return null;
+    return rows[0] as User;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
 export async function getUserByEmail(email: string) {
   try {
     const { rows } = await sql`SELECT * FROM users WHERE email=${email};`;
