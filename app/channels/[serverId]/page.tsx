@@ -6,9 +6,9 @@ import { NewChannelForm } from "./components/NewChannelForm";
 import { NoServerPage } from "./components/NoServerPage";
 import { ChannelsList } from "./components/ChannelsList";
 import { Channel } from "./components/Channel";
-import { getServer, isServerAdmin } from "@/lib/actions/serverActions";
-import { getCurrentUser } from "@/lib/actions/userActions";
-import { getChannels } from "@/lib/actions/channelActions";
+import { getServer, isServerAdmin } from "@/lib/serverActions";
+import { getCurrentUser } from "@/lib/userActions";
+import { getChannels } from "./lib/actions";
 import { redirect } from "next/navigation";
 
 type ServerPageProps = {

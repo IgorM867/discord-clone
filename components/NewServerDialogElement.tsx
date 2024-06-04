@@ -3,7 +3,7 @@ import { Input } from "./Input";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { SvgXIcon } from "./svgIcons/SvgXIcon";
-import { createServer } from "@/lib/actions/serverActions";
+import { createServer } from "@/lib/serverActions";
 
 const initialState = {
   error: "",

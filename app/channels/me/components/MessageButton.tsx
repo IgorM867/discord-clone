@@ -1,6 +1,6 @@
 "use client";
 import { SvgMessageIcon } from "@/components/svgIcons/SvgMessageIcon";
-import { createDirectChat } from "@/lib/actions/channelActions";
+import { createDirectChat } from "@/lib/directChatsActions";
 
 function MessageButton({ userId }: { userId: string }) {
   return (

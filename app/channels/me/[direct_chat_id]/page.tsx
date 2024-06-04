@@ -1,7 +1,7 @@
-import { getDirectChatUser } from "@/lib/actions/channelActions";
+import { getDirectChatUser } from "@/lib/directChatsActions";
 import { UserAvatar } from "../components/UserAvatar";
 import { Chat } from "@/components/Chat";
-import { getCurrentUser } from "@/lib/actions/userActions";
+import { getCurrentUser } from "@/lib/userActions";
 import { redirect } from "next/navigation";
 import { DirectChatsSidebar } from "../components/DirectChatsSidebar";
 

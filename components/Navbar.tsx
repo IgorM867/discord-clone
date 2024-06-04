@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { NavbarButton } from "./NavbarButton";
 import { NewServerButton } from "./NewServerButton";
-import { getServers } from "@/lib/actions/serverActions";
+import { getServers } from "@/lib/serverActions";
 
 type NavbarProps = {
   serverId: string;

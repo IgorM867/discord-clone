@@ -1,7 +1,8 @@
-import { getInvite, getServer } from "@/lib/actions/serverActions";
-import { getUserById } from "@/lib/actions/userActions";
+import { getServer } from "@/lib/serverActions";
 import { InvalidInvitePage } from "./components/InvalidInvitePage";
 import { ValidInvitePage } from "./components/ValidInvitePage";
+import { getInvite } from "@/lib/invitiesToServerActions";
+import { getUserById } from "@/lib/userActions";
 
 type InvitePageProps = {
   params: {

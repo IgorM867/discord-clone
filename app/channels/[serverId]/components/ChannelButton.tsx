@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SvghashtagIcon } from "@/components/svgIcons/SvgHashtagIcon";
 import { ContextMenu, ContextMenuOption } from "@/components/ContextMenu";
 import { useContextMenu } from "@/hooks/useContextMenu";
-import { deleteChannel } from "@/lib/actions/channelActions";
+import { deleteChannel } from "../lib/actions";
 import { useParams } from "next/navigation";
 
 type ChannelButtonProps = {

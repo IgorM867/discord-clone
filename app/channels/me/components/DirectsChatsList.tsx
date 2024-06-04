@@ -1,4 +1,4 @@
-import { getDirectChats } from "@/lib/actions/channelActions";
+import { getDirectChats } from "@/lib/directChatsActions";
 import { UserAvatar } from "./UserAvatar";
 import Link from "next/link";
 

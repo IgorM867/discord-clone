@@ -1,7 +1,7 @@
 import { MessageForm } from "./MessageForm";
 import { MessagesList } from "./MessagesList";
 import { ChatLoadingSkeleton } from "./ChatLoadingSkeleton";
-import { sendMessage } from "@/lib/actions";
+import { sendMessage } from "@/lib/messagesActions";
 import { Suspense } from "react";
 
 type ChatProps = {

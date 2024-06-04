@@ -1,4 +1,4 @@
-import { sendInviteLink } from "@/lib/actions/serverActions";
+import { sendInviteLink } from "@/lib/invitiesToServerActions";
 import { FriendsListToInviteItem } from "./FriendsListToInviteItem";
 
 type FriendsListToInviteProps = { friends: User[]; inviteLink: string };

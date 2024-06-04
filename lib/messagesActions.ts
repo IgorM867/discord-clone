@@ -1,8 +1,7 @@
-"use server";
+import { redirect } from "next/navigation";
+import { getCurrentUser } from "./userActions";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
-import { getCurrentUser } from "./actions/userActions";
-import { redirect } from "next/navigation";
 
 export async function sendMessage(
   content: string,
@@ -30,6 +29,7 @@ export async function sendMessage(
     revalidatePath(`/channels/me/${chatId}`, "page");
   }
 }
+
 export async function getMessages(channelId: string, chatType: "server_chat" | "direct_chat") {
   if (chatType === "server_chat") {
     try {
@@ -44,7 +44,7 @@ export async function getMessages(channelId: string, chatType: "server_chat" | "
     try {
       const result =
         await sql`SELECT direct_messages.id,creator_id,content,created_at,chat_id,users.username as creatorname 
-        FROM direct_messages JOIN users on direct_messages.creator_id = users.id where chat_id=${channelId} Order By created_at;`;
+          FROM direct_messages JOIN users on direct_messages.creator_id = users.id where chat_id=${channelId} Order By created_at;`;
       return result.rows as Array<DirectMessage & { creatorname: string }>;
     } catch (error) {
       console.log(error);

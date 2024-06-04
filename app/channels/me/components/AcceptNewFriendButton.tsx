@@ -1,6 +1,6 @@
 "use client";
 import { SvgCheckIcon } from "@/components/svgIcons/SvgCheckIcon";
-import { acceptFriendRequest } from "@/lib/actions/userActions";
+import { acceptFriendRequest } from "@/lib/usersRelationshipsActions";
 
 function AcceptPendingFriendButton({ userId }: { userId: string }) {
   return (

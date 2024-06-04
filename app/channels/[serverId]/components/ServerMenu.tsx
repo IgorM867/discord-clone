@@ -2,9 +2,9 @@ import { SvgCircleArrowLeftIcon } from "@/components/svgIcons/SvgCircleArrowLeft
 import { SvgCirclePlusIcon } from "@/components/svgIcons/SvgCirclePlusIcon";
 import { SvgUserPlusIcon } from "@/components/svgIcons/SvgUserPlusIcon";
 import { SvgTrashIcon } from "@/components/svgIcons/SvgTrashIcon";
-import { deleteServer, leaveServer } from "@/lib/actions/serverActions";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { ServerMenuButton } from "./ServerMenuButton";
+import { deleteServer, leaveServer } from "@/lib/serverActions";
 
 type ServerMenuProps = {
   isAdmin: boolean;

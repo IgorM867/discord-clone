@@ -1,6 +1,6 @@
 "use client";
 import { SvgXIcon } from "@/components/svgIcons/SvgXIcon";
-import { deletePendingFriend } from "@/lib/actions/userActions";
+import { deletePendingFriend } from "@/lib/usersRelationshipsActions";
 
 function DeletePendingFriendButton({ userId }: { userId: string }) {
   return (

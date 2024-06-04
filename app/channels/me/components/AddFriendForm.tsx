@@ -1,5 +1,5 @@
 "use client";
-import { sendFriendRequest } from "@/lib/actions/userActions";
+import { sendFriendRequest } from "@/lib/usersRelationshipsActions";
 import { useFormState } from "react-dom";
 
 type RequestState = {

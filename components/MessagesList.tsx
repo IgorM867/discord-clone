@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { ChannelWelcomeMessage } from "./ChannelWelcomeMessage";
 import { Message } from "./Message";
 import { MessagesDivider } from "./MessagesDivider";
-import { getMessages } from "@/lib/actions";
+import { getMessages } from "@/lib/messagesActions";
 
 type MessagesListProps = {
   chatId: string;

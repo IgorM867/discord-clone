@@ -1,4 +1,5 @@
-import { getAllRelationships, getCurrentUser } from "@/lib/actions/userActions";
+import { getAllRelationships } from "@/lib/usersRelationshipsActions";
+import { getCurrentUser } from "@/lib/userActions";
 import { FriendsDashboard } from "./components/FriendsDashboard";
 import { redirect } from "next/navigation";
 import { DirectChatsSidebar } from "./components/DirectChatsSidebar";

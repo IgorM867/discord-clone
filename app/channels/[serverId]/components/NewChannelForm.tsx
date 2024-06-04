@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { createChannel } from "@/lib/actions/channelActions";
+import { createChannel } from "../lib/actions";
 import { useFormState } from "react-dom";
 import { Modal } from "@/components/Modal";
 import { useRouter } from "next/navigation";

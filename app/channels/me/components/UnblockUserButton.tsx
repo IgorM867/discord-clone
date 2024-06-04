@@ -1,6 +1,6 @@
 "use client";
 import { SvgUnblockUserIcon } from "@/components/svgIcons/SvgUnblockUserIcon";
-import { deleteRelationship } from "@/lib/actions/userActions";
+import { deleteRelationship } from "@/lib/usersRelationshipsActions";
 
 function UnblockUserButton({ userId }: { userId: string }) {
   return (

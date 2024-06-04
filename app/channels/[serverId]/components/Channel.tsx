@@ -1,7 +1,7 @@
 import { Error } from "@/components/Error";
 import { SvghashtagIcon } from "@/components/svgIcons/SvgHashtagIcon";
 import { Chat } from "@/components/Chat";
-import { getChannel } from "@/lib/actions/channelActions";
+import { getChannel } from "../lib/actions";
 
 async function Channel({ channelId }: { channelId: string }) {
   const channel = await getChannel(channelId);

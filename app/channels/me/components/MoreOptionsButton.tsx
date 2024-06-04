@@ -1,7 +1,7 @@
 "use client";
 import { SvgEllipsisVerticalIcon } from "@/components/svgIcons/SvgEllipsisVerticalIcon";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
-import { deleteFriend } from "@/lib/actions/userActions";
+import { deleteFriend } from "@/lib/usersRelationshipsActions";
 import { useState } from "react";
 
 function MoreOptionsButton({ userId }: { userId: string }) {

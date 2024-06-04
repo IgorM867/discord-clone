@@ -1,8 +1,7 @@
-import { getServer, isServerAdmin } from "@/lib/actions/serverActions";
-import { getCurrentUser } from "@/lib/actions/userActions";
+import { getCurrentUser } from "@/lib/userActions";
 import { redirect } from "next/navigation";
 import { NoServerPage } from "../components/NoServerPage";
-import { getChannels } from "@/lib/actions/channelActions";
+import { getChannels } from "../lib/actions";
 import { ChannelSidebar } from "../components/ChannelSidebar";
 import { ChannelSidebarHeader } from "../components/ChannelSidebarHeader";
 import { ChannelsList } from "../components/ChannelsList";
@@ -10,6 +9,7 @@ import { InviteFriendsModal } from "../components/InviteFriendsModal";
 import { NewChannelForm } from "../components/NewChannelForm";
 import { NoChannelsPage } from "../components/NoChannelsPage";
 import { Channel } from "../components/Channel";
+import { getServer, isServerAdmin } from "@/lib/serverActions";
 
 type ChannelPageProps = {
   params: {

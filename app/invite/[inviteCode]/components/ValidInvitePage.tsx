@@ -1,5 +1,5 @@
 "use client";
-import { acceptInvite } from "@/lib/actions/serverActions";
+import { acceptInvite } from "@/lib/invitiesToServerActions";
 import Image from "next/image";
 
 type ValidInvitePagePros = {

@@ -1,5 +1,5 @@
 import { Navbar } from "@/components/Navbar";
-import { getCurrentUser } from "@/lib/actions/userActions";
+import { getCurrentUser } from "@/lib/userActions";
 import { redirect } from "next/navigation";
 
 type ServerLayoutProps = {

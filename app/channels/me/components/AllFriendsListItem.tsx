@@ -2,9 +2,9 @@
 import { MoreOptionsButton } from "./MoreOptionsButton";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { ContextMenu, ContextMenuOption } from "@/components/ContextMenu";
-import { blockUser, deleteFriend } from "@/lib/actions/userActions";
 import { UserAvatar } from "./UserAvatar";
 import { MessageButton } from "./MessageButton";
+import { deleteFriend, blockUser } from "@/lib/usersRelationshipsActions";
 
 function AllFriendsListItem({ user }: { user: User }) {
   const { ref, contextMenu, handleContextMenu, resetMenu } = useContextMenu<HTMLLIElement>();
