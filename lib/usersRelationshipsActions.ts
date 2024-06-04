@@ -1,3 +1,4 @@
+'use server'
 import { sql } from "@vercel/postgres";
 import { getCurrentUser, getUserByUsername } from "./userActions";
 import { revalidatePath } from "next/cache";
