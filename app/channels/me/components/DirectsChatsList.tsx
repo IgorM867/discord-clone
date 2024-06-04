@@ -7,7 +7,7 @@ async function DirectsChatsList({
   activeChatId,
 }: {
   userId: string;
-  activeChatId?: string;
+  activeChatId: string;
 }) {
   const directChats = await getDirectChats(userId);
 
