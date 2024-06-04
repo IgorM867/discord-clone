@@ -149,3 +149,16 @@ export async function acceptInvite(inviteCode: string) {
   revalidatePath("/channels/[serverId]", "page");
   redirect(`/channels/${invition.server_id}`);
 }
+export async function leaveServer(serverId: string) {
+  const session = await getCurrentUser();
+  if (!session?.user) return;
+
+  try {
+    await sql`DELETE FROM server_users WHERE user_id = ${session.user.id} AND server_id = ${serverId}`;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+  revalidatePath("/channels/me", "page");
+  redirect(`/channels/me`);
+}

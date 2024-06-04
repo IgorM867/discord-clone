@@ -2,7 +2,7 @@ import { SvgCircleArrowLeftIcon } from "@/components/svgIcons/SvgCircleArrowLeft
 import { SvgCirclePlusIcon } from "@/components/svgIcons/SvgCirclePlusIcon";
 import { SvgUserPlusIcon } from "@/components/svgIcons/SvgUserPlusIcon";
 import { SvgTrashIcon } from "@/components/svgIcons/SvgTrashIcon";
-import { deleteServer } from "@/lib/actions/serverActions";
+import { deleteServer, leaveServer } from "@/lib/actions/serverActions";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { ServerMenuButton } from "./ServerMenuButton";
 
@@ -61,7 +61,7 @@ function ServerMenu({ isAdmin, serverId, close }: ServerMenuProps) {
           <ServerMenuButton
             type="button"
             value="Leave Server"
-            onClick={() => {}}
+            onClick={async () => await leaveServer(serverId)}
             className="text-d-red hover:bg-d-red hover:text-d-white"
           >
             <SvgCircleArrowLeftIcon
