@@ -21,9 +21,7 @@ function FriendsListToInviteItem({ friend, sendInviteLink }: FriendsListToInvite
   return (
     <li className="group flex items-center justify-between rounded-md  p-2 hover:bg-d-gray-250">
       <div className="flex items-center gap-2">
-        <div className="size-8 bg-d-red grid place-items-center rounded-full">
-          <Image src="/logos/icon_clyde_white.svg" alt="avatar" width={20} height={20} />
-        </div>
+        <Image src={friend.image} alt="user avatar" width={32} height={32} />
         {friend.username}
       </div>
       <button

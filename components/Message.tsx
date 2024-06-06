@@ -1,3 +1,4 @@
+import { getUserById } from "@/lib/userActions";
 import Image from "next/image";
 
 type MessageProps = {
@@ -5,15 +6,16 @@ type MessageProps = {
   withUser?: boolean;
 };
 
-function Message({ message, withUser }: MessageProps) {
+async function Message({ message, withUser }: MessageProps) {
+  const user = await getUserById(message.creator_id);
+  if (!user) return;
+
   return (
     <li className="hover:bg-d-gray-450 pl-5 font-normal flex last:mb-6 group py-1">
       {withUser ? (
         <>
           <div className="w-12">
-            <div className="size-10 bg-d-red rounded-full grid place-items-center p-1 cursor-pointer">
-              <Image src="/logos/icon_clyde_white.svg" alt="avatar" width={24} height={24} />
-            </div>
+            <Image src={user.image} alt="user avatar" width={40} height={40} />
           </div>
           <div>
             <div className="text-d-gray-100 font-medium">

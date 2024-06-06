@@ -22,11 +22,7 @@ async function InvitePage({ params }: InvitePageProps) {
   if (!server) return <InvalidInvitePage />;
 
   return (
-    <ValidInvitePage
-      inviteCode={params.inviteCode}
-      inviterUsername={inviter.username}
-      serverName={server.name}
-    />
+    <ValidInvitePage inviteCode={params.inviteCode} inviter={inviter} serverName={server.name} />
   );
 }
 

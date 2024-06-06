@@ -8,9 +8,10 @@ type MessagesListProps = {
   chatId: string;
   chatType: "server_chat" | "direct_chat";
   chatName: string;
+  userImage?: string;
 };
 
-async function MessagesList({ chatId, chatType, chatName }: MessagesListProps) {
+async function MessagesList({ chatId, chatType, chatName, userImage }: MessagesListProps) {
   const messages = await getMessages(chatId, chatType);
 
   let lastDate: Date | null = null;
@@ -20,7 +21,7 @@ async function MessagesList({ chatId, chatType, chatName }: MessagesListProps) {
 
   return (
     <ol className="overflow-y-scroll  h-[calc(100%_-_64px)] flex flex-col scrollbar ">
-      <ChannelWelcomeMessage message={message} chatType={chatType} />
+      <ChannelWelcomeMessage message={message} chatType={chatType} userImage={userImage} />
       {messages.map((message) => {
         const isNewDay = checkIsNewDay(lastDate, message.created_at);
         const isNewUser = lastUserId !== message.creator_id;

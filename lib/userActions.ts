@@ -1,8 +1,14 @@
-'use server'
+"use server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { sql } from "@vercel/postgres";
 import { getServerSession } from "next-auth";
 import { unstable_noStore as noStore } from "next/cache";
+
+function getRandomImage() {
+  const colors = ["black", "red", "green", "purple", "blue"];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  return `/avatars/icon_clyde_${color}_background.svg`;
+}
 
 export async function createUser({
   username,
@@ -17,7 +23,9 @@ export async function createUser({
 }) {
   try {
     const result =
-      await sql`INSERT INTO users (username,email,image,password) VALUES (${username},${email},${image},${password}) RETURNING *;`;
+      await sql`INSERT INTO users (username,email,image,password) VALUES (${username},${email},${
+        image === null ? getRandomImage() : image
+      },${password}) RETURNING *;`;
 
     return result.rows[0] as User;
   } catch (error) {

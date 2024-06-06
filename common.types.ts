@@ -2,7 +2,7 @@ interface User {
   id: string;
   username: string;
   email: string;
-  image: string | null;
+  image: string;
   status: "Online" | "Offline";
   password?: string | null;
 }

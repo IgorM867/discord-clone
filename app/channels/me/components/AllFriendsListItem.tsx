@@ -33,7 +33,7 @@ function AllFriendsListItem({ user }: { user: User }) {
         onContextMenu={handleContextMenu}
       >
         <div className="flex items-center gap-3 ">
-          <UserAvatar isOnline={user.status === "Online"} size="big" />
+          <UserAvatar isOnline={user.status === "Online"} size="big" src={user.image} />
           <div>
             <p className="text-d-white font-medium">{user.username}</p>
             <p className="text-d-gray-125 text-xs">{user.status}</p>

@@ -1,20 +1,19 @@
 import Image from "next/image";
 
-function UserAvatar({ isOnline, size }: { isOnline: boolean; size: "small" | "big" }) {
+type UserAvatarProps = {
+  isOnline: boolean;
+  size: "small" | "big";
+  src: string;
+};
+function UserAvatar({ isOnline, size, src }: UserAvatarProps) {
   return (
-    <div
-      className={`${
-        size === "big" ? "size-8" : "size-6"
-      } bg-d-red rounded-full grid place-items-center p-1 cursor-pointer`}
-    >
-      <Image src="/logos/icon_clyde_white.svg" alt="avatar" width={20} height={20} />
+    <div className={`${size === "big" ? "size-8" : "size-6"} cursor-pointer relative`}>
+      <Image src={src} alt="user avatar" fill />
       {isOnline ? (
         <div
           className={`${
-            size === "big"
-              ? "-translate-x-[-70%] -translate-y-[-70%]"
-              : "-translate-x-[-50%] -translate-y-[-50%]"
-          } absolute bg-d-gray-400 rounded-full size-4  grid place-items-center`}
+            size === "big" ? "size-4" : "size-3"
+          } absolute -translate-x-[-120%] -translate-y-[-120%] bg-d-gray-400 rounded-full grid place-items-center`}
         >
           <div
             className={`${
@@ -31,10 +30,8 @@ function UserAvatar({ isOnline, size }: { isOnline: boolean; size: "small" | "bi
       ) : (
         <div
           className={`${
-            size === "big"
-              ? "-translate-x-[-70%] -translate-y-[-70%] size-4"
-              : "-translate-x-[-65%] -translate-y-[-65%] size-3"
-          } absolute bg-d-gray-400 rounded-full  grid place-items-center`}
+            size === "big" ? "size-4" : "size-3"
+          } absolute -translate-x-[-120%] -translate-y-[-120%] bg-d-gray-400 rounded-full  grid place-items-center`}
         >
           <div
             className={`${

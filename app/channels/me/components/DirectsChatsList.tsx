@@ -21,7 +21,7 @@ async function DirectsChatsList({
           } group px-3 py-2 hover:bg-d-gray-250 rounded-md cursor-pointer flex items-center gap-2`}
           href={`/channels/me/${chat.chatId}`}
         >
-          <UserAvatar size="big" isOnline={chat.user.status === "Online"} />
+          <UserAvatar size="big" isOnline={chat.user.status === "Online"} src={chat.user.image} />
           <span className="group-hover:text-d-gray-100">{chat.user.username}</span>
         </Link>
       ))}
